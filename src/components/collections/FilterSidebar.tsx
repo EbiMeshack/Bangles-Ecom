@@ -7,23 +7,27 @@ import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-interface FilterSidebarProps {
+export interface FilterSidebarProps {
+    categories: string[];
     selectedCategories: string[];
     setSelectedCategories: (categories: string[]) => void;
     priceRange: [number, number];
     setPriceRange: (range: [number, number]) => void;
+    minPrice: number;
+    maxPrice: number;
     minRating: number | null;
     setMinRating: (rating: number | null) => void;
     className?: string;
 }
 
-const CATEGORIES = ["bangles", "earrings", "necklace", "rings"];
-
 export function FilterSidebar({
+    categories,
     selectedCategories,
     setSelectedCategories,
     priceRange,
     setPriceRange,
+    minPrice,
+    maxPrice,
     minRating,
     setMinRating,
     className,
@@ -37,7 +41,7 @@ export function FilterSidebar({
     };
 
     return (
-        <aside className={cn("w-full md:w-64 lg:w-72 space-y-8 sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent", className)}>
+        <aside className={cn("w-full md:w-64 lg:w-72 space-y-8 sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pl-2 pr-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent", className)}>
             <div>
                 <h3 className="text-xl font-bold mb-6">Filters</h3>
             </div>
@@ -45,7 +49,7 @@ export function FilterSidebar({
             <div>
                 <h4 className="font-semibold mb-3">Category</h4>
                 <div className="space-y-2">
-                    {CATEGORIES.map((category) => (
+                    {categories.map((category) => (
                         <div key={category} className="flex items-center space-x-2">
                             <Checkbox
                                 id={`category-${category}`}
@@ -54,7 +58,7 @@ export function FilterSidebar({
                             />
                             <Label
                                 htmlFor={`category-${category}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize cursor-pointer"
                             >
                                 {category}
                             </Label>
@@ -67,10 +71,10 @@ export function FilterSidebar({
                 <h4 className="font-semibold mb-3">Price Range</h4>
                 <div className="space-y-4">
                     <Slider
-                        defaultValue={[0, 2000]}
-                        max={2000}
-                        min={0}
-                        step={50}
+                        defaultValue={[minPrice, maxPrice]}
+                        max={maxPrice}
+                        min={minPrice}
+                        step={10}
                         value={priceRange}
                         onValueChange={(value) => setPriceRange(value as [number, number])}
                     />
@@ -87,11 +91,11 @@ export function FilterSidebar({
                     {[4, 3, 2, 1].map((star) => (
                         <div
                             key={star}
-                            className="flex items-center space-x-2 cursor-pointer"
+                            className="flex items-center space-x-2 cursor-pointer group"
                             onClick={() => setMinRating(minRating === star ? null : star)}
                         >
-                            <Checkbox id={`rating-${star}`} checked={minRating === star} />
-                            <div className="flex items-center">
+                            <Checkbox id={`rating-${star}`} checked={minRating === star} onCheckedChange={() => setMinRating(minRating === star ? null : star)} />
+                            <div className="flex items-center group-hover:text-primary transition-colors">
                                 {Array.from({ length: 5 }).map((_, i) => (
                                     <Star
                                         key={i}
