@@ -1,0 +1,362 @@
+[
+    {
+        "id": "1",
+        "name": "Classic Gold Bangle",
+        "price": 450,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.5,
+        "reviews": 120
+    },
+    {
+        "id": "2",
+        "name": "Ruby Studded Bangle",
+        "price": 650,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 85
+    },
+    {
+        "id": "3",
+        "name": "Emerald Elegance",
+        "price": 550,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 92
+    },
+    {
+        "id": "4",
+        "name": "Silver Oxidized Bangle",
+        "price": 120,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.3,
+        "reviews": 45
+    },
+    {
+        "id": "5",
+        "name": "Diamond Dust Bangle",
+        "price": 890,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.9,
+        "reviews": 210
+    },
+    {
+        "id": "6",
+        "name": "Temple Design Kada",
+        "price": 380,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.6,
+        "reviews": 150
+    },
+    {
+        "id": "7",
+        "name": "Pearl Cluster Bangle",
+        "price": 280,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.4,
+        "reviews": 78
+    },
+    {
+        "id": "8",
+        "name": "Kundan Polki Bangle",
+        "price": 720,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1608042314453-ae338d80c427?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 105
+    },
+    {
+        "id": "9",
+        "name": "Modern Minimalist Cuff",
+        "price": 150,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.2,
+        "reviews": 32
+    },
+    {
+        "id": "10",
+        "name": "Thread Work Bangle",
+        "price": 50,
+        "category": "bangles",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.0,
+        "reviews": 25
+    },
+    {
+        "id": "11",
+        "name": "Diamond Studs",
+        "price": 1200,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.9,
+        "reviews": 350
+    },
+    {
+        "id": "12",
+        "name": "Gold Jhumkas",
+        "price": 480,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 280
+    },
+    {
+        "id": "13",
+        "name": "Pearl Drop Earrings",
+        "price": 250,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.5,
+        "reviews": 110
+    },
+    {
+        "id": "14",
+        "name": "Chandbali Earrings",
+        "price": 520,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 195
+    },
+    {
+        "id": "15",
+        "name": "Silver Hoops",
+        "price": 90,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.3,
+        "reviews": 88
+    },
+    {
+        "id": "16",
+        "name": "Crystal Dangler",
+        "price": 180,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.4,
+        "reviews": 65
+    },
+    {
+        "id": "17",
+        "name": "Rose Gold Studs",
+        "price": 350,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.6,
+        "reviews": 130
+    },
+    {
+        "id": "18",
+        "name": "Emerald Drops",
+        "price": 600,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 95
+    },
+    {
+        "id": "19",
+        "name": "Antique Temple Earrings",
+        "price": 420,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 175
+    },
+    {
+        "id": "20",
+        "name": "Boho Beaded Earrings",
+        "price": 40,
+        "category": "earrings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.1,
+        "reviews": 30
+    },
+    {
+        "id": "21",
+        "name": "Gold Chain Necklace",
+        "price": 850,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.6,
+        "reviews": 220
+    },
+    {
+        "id": "22",
+        "name": "Diamond Pendant",
+        "price": 1500,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.9,
+        "reviews": 410
+    },
+    {
+        "id": "23",
+        "name": "Pearl Choker",
+        "price": 450,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.5,
+        "reviews": 140
+    },
+    {
+        "id": "24",
+        "name": "Temple Necklace Set",
+        "price": 980,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 300
+    },
+    {
+        "id": "25",
+        "name": "Layered Gold Chain",
+        "price": 600,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.4,
+        "reviews": 90
+    },
+    {
+        "id": "26",
+        "name": "Silver Oxidized Necklace",
+        "price": 200,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.3,
+        "reviews": 75
+    },
+    {
+        "id": "27",
+        "name": "Ruby & Emerald Set",
+        "price": 1100,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 160
+    },
+    {
+        "id": "28",
+        "name": "Minimalist Bar Pendant",
+        "price": 300,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.5,
+        "reviews": 115
+    },
+    {
+        "id": "29",
+        "name": "Mangalsutra",
+        "price": 550,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.9,
+        "reviews": 500
+    },
+    {
+        "id": "30",
+        "name": "Beaded Statement Necklace",
+        "price": 120,
+        "category": "necklace",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.2,
+        "reviews": 50
+    },
+    {
+        "id": "31",
+        "name": "Diamond Solitaire Ring",
+        "price": 2000,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.9,
+        "reviews": 600
+    },
+    {
+        "id": "32",
+        "name": "Gold Band",
+        "price": 350,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 450
+    },
+    {
+        "id": "33",
+        "name": "Rose Gold Stackable",
+        "price": 250,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.6,
+        "reviews": 180
+    },
+    {
+        "id": "34",
+        "name": "Emerald Ring",
+        "price": 750,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 230
+    },
+    {
+        "id": "35",
+        "name": "Silver Statement Ring",
+        "price": 110,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.4,
+        "reviews": 95
+    },
+    {
+        "id": "36",
+        "name": "Pearl Ring",
+        "price": 300,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.5,
+        "reviews": 140
+    },
+    {
+        "id": "37",
+        "name": "Antique Gold Ring",
+        "price": 420,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.6,
+        "reviews": 125
+    },
+    {
+        "id": "38",
+        "name": "Couple Rings",
+        "price": 600,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.8,
+        "reviews": 350
+    },
+    {
+        "id": "39",
+        "name": "Ruby Ring",
+        "price": 700,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.7,
+        "reviews": 210
+    },
+    {
+        "id": "40",
+        "name": "Cocktail Ring",
+        "price": 180,
+        "category": "rings",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "rating": 4.3,
+        "reviews": 60
+    }
+]

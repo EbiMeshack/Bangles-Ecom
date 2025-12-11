@@ -23,27 +23,22 @@ export function Header() {
 
                         <nav className="flex-1 overflow-y-auto py-6 px-6 flex flex-col gap-6">
                             <div className="flex flex-col gap-4">
-                                <Link href="#" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
-                                    Shop All
-                                </Link>
-                                <Link href="#" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
+
+                                <Link href="/collections" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
                                     Collections
                                 </Link>
-                                <Link href="#" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
+                                <Link href="/about" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
                                     About Us
                                 </Link>
                                 <Link href="#" className="text-2xl font-semibold tracking-tight hover:text-primary transition-colors">
-                                    Contact
+                                    Help & Support
                                 </Link>
                             </div>
 
                             <hr className="border-border/50" />
 
                             <div className="flex flex-col gap-4 text-muted-foreground">
-                                <Link href="#" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
-                                    <Search className="size-5" />
-                                    Search
-                                </Link>
+
                                 <Link href="#" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
                                     <Heart className="size-5" />
                                     Favorites
@@ -52,9 +47,7 @@ export function Header() {
                                     <ShoppingCart className="size-5" />
                                     My Cart
                                 </Link>
-                                <Link href="#" className="text-lg font-medium hover:text-foreground transition-colors">
-                                    Help & Support
-                                </Link>
+
                             </div>
                         </nav>
                         <div className="p-6 border-t bg-muted/20">
@@ -77,17 +70,17 @@ export function Header() {
 
                 {/* Desktop Nav - Hidden on Mobile */}
                 <nav className="hidden md:flex items-center gap-6">
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
-                        Shop All
-                    </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                    <Link href="/collections" className="text-sm font-medium hover:text-primary transition-colors">
                         Collections
                     </Link>
                     <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
-                        About Us
+                        Orders
+                    </Link>
+                    <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
+                        About
                     </Link>
                     <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
-                        Contact
+                        Help
                     </Link>
                 </nav>
 
