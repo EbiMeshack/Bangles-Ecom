@@ -25,7 +25,7 @@ interface MobileFilterProps {
 
 export function MobileFilter(props: MobileFilterProps) {
     return (
-        <div className="md:hidden block mt-1 mb-6">
+        <div className="md:hidden block mt-2 mb-6">
             <Drawer>
                 <DrawerTrigger asChild>
                     <Button variant="ghost" className="flex items-center gap-2 w-full">

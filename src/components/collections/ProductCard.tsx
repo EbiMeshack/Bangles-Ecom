@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ProductCardProps {
     product: Product;
@@ -11,7 +12,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
     return (
         <Link href={`#product-${product.id}`} className="group block h-full">
-            <div className="flex flex-col h-full bg-card rounded-xl overflow-hidden border hover:shadow-lg transition-all duration-300">
+            <Card className="flex flex-col h-full overflow-hidden border hover:shadow-lg transition-all duration-300 p-0 gap-0 shadow-none rounded-xl">
                 <div className="relative aspect-square overflow-hidden bg-muted/20">
                     <Image
                         src={product.image}
@@ -34,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
                     </div>
                 </div>
 
-                <div className="p-3 sm:p-4 flex flex-col flex-1">
+                <CardContent className="p-3 sm:p-4 flex flex-col flex-1">
                     <div className="mb-2">
                         <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             {product.category}
@@ -54,8 +55,9 @@ export function ProductCard({ product }: ProductCardProps) {
                             <span className="text-[10px] sm:text-xs text-muted-foreground">({product.reviews})</span>
                         </div>
                     </div>
-                </div>
-            </div>
+                </CardContent>
+            </Card>
         </Link>
     );
 }
+

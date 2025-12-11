@@ -79,136 +79,114 @@ export default function CollectionsPage() {
     return (
         <div className="flex min-h-screen flex-col font-sans">
             <Header />
+            <main className="flex-1">
+                <div className="container mx-auto px-8 py-8">
+                    {/* Search Section matched to code.html */}
+                    {/* Search Section matched to code.html */}
+                    <CollectionSearch value={searchQuery} onChange={setSearchQuery} />
 
-            <main className="flex-1 container mx-auto px-4 py-8">
-                {/* Search Section matched to code.html */}
-                {/* Search Section matched to code.html */}
-                <CollectionSearch value={searchQuery} onChange={setSearchQuery} />
-
-                <MobileFilter
-                    selectedCategories={selectedCategories}
-                    setSelectedCategories={setSelectedCategories}
-                    priceRange={priceRange}
-                    setPriceRange={setPriceRange}
-                    minRating={minRating}
-                    setMinRating={setMinRating}
-                />
-
-                <div className="flex flex-col md:flex-row gap-12 items-start">
-                    <FilterSidebar
+                    <MobileFilter
                         selectedCategories={selectedCategories}
                         setSelectedCategories={setSelectedCategories}
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
                         minRating={minRating}
                         setMinRating={setMinRating}
-                        className="hidden md:block"
                     />
 
-                    <div className="flex-1 min-w-0">
-                        <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-                            <h1 className="text-2xl font-bold text-[#181611] dark:text-gray-100">Search Results</h1>
-                            <div className="flex items-center gap-4 mt-2 sm:mt-0">
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filteredProducts.length)}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)} of {filteredProducts.length} results
-                                </p>
-                                <div className="hidden md:flex items-center gap-1">
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() => handlePageChange(currentPage - 1)}
-                                        disabled={currentPage === 1}
-                                        aria-label="Previous page"
-                                    >
-                                        <ChevronLeft className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() => handlePageChange(currentPage + 1)}
-                                        disabled={currentPage === totalPages}
-                                        aria-label="Next page"
-                                    >
-                                        <ChevronRight className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="flex flex-col md:flex-row gap-12 items-start">
+                        <FilterSidebar
+                            selectedCategories={selectedCategories}
+                            setSelectedCategories={setSelectedCategories}
+                            priceRange={priceRange}
+                            setPriceRange={setPriceRange}
+                            minRating={minRating}
+                            setMinRating={setMinRating}
+                            className="hidden md:block"
+                        />
 
-                        <ProductGrid products={paginatedProducts} />
+                        <div className="flex-1 min-w-0">
+                            <ProductGrid
+                                products={paginatedProducts}
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                totalResults={filteredProducts.length}
+                                itemsPerPage={ITEMS_PER_PAGE}
+                                handlePageChange={handlePageChange}
+                            />
 
-                        {/* Pagination matched to code.html */}
-                        {totalPages > 1 && (
-                            <Pagination className="mt-12">
-                                <PaginationContent>
-                                    <PaginationItem>
-                                        <PaginationPrevious
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                if (currentPage > 1) handlePageChange(currentPage - 1);
-                                            }}
-                                            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                                        />
-                                    </PaginationItem>
+                            {/* Pagination matched to code.html */}
+                            {totalPages > 1 && (
+                                <Pagination className="mt-12">
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationPrevious
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    if (currentPage > 1) handlePageChange(currentPage - 1);
+                                                }}
+                                                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                            />
+                                        </PaginationItem>
 
-                                    {/* Smart Pagination Logic */}
-                                    {(() => {
-                                        const items = [];
-                                        const maxVisible = 5; // Max buttons to show including ellipses
+                                        {/* Smart Pagination Logic */}
+                                        {(() => {
+                                            const items = [];
+                                            const maxVisible = 5; // Max buttons to show including ellipses
 
-                                        if (totalPages <= maxVisible) {
-                                            for (let i = 1; i <= totalPages; i++) {
-                                                items.push(i);
-                                            }
-                                        } else {
-                                            if (currentPage <= 3) {
-                                                items.push(1, 2, 3, "ellipsis", totalPages);
-                                            } else if (currentPage >= totalPages - 2) {
-                                                items.push(1, "ellipsis", totalPages - 2, totalPages - 1, totalPages);
+                                            if (totalPages <= maxVisible) {
+                                                for (let i = 1; i <= totalPages; i++) {
+                                                    items.push(i);
+                                                }
                                             } else {
-                                                items.push(1, "ellipsis", currentPage, "ellipsis", totalPages);
+                                                if (currentPage <= 3) {
+                                                    items.push(1, 2, 3, "ellipsis", totalPages);
+                                                } else if (currentPage >= totalPages - 2) {
+                                                    items.push(1, "ellipsis", totalPages - 2, totalPages - 1, totalPages);
+                                                } else {
+                                                    items.push(1, "ellipsis", currentPage, "ellipsis", totalPages);
+                                                }
                                             }
-                                        }
 
-                                        return items.map((item, index) => (
-                                            <PaginationItem key={index}>
-                                                {item === "ellipsis" ? (
-                                                    <PaginationEllipsis />
-                                                ) : (
-                                                    <PaginationLink
-                                                        href="#"
-                                                        isActive={currentPage === item}
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            handlePageChange(item as number);
-                                                        }}
-                                                        className="cursor-pointer"
-                                                    >
-                                                        {item}
-                                                    </PaginationLink>
-                                                )}
-                                            </PaginationItem>
-                                        ));
-                                    })()}
+                                            return items.map((item, index) => (
+                                                <PaginationItem key={index}>
+                                                    {item === "ellipsis" ? (
+                                                        <PaginationEllipsis />
+                                                    ) : (
+                                                        <PaginationLink
+                                                            href="#"
+                                                            isActive={currentPage === item}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                handlePageChange(item as number);
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            {item}
+                                                        </PaginationLink>
+                                                    )}
+                                                </PaginationItem>
+                                            ));
+                                        })()}
 
-                                    <PaginationItem>
-                                        <PaginationNext
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                if (currentPage < totalPages) handlePageChange(currentPage + 1);
-                                            }}
-                                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                                        />
-                                    </PaginationItem>
-                                </PaginationContent>
-                            </Pagination>
-                        )}
+                                        <PaginationItem>
+                                            <PaginationNext
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    if (currentPage < totalPages) handlePageChange(currentPage + 1);
+                                                }}
+                                                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                            />
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
-
             <Footer />
         </div>
     );
