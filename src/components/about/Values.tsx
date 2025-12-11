@@ -4,7 +4,7 @@ import { Leaf, Gem, Handshake } from "lucide-react";
 const Values = () => {
     return (
         <section className="py-20 md:py-32">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 md:px-12">
                 <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                     <div>
                         <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500">
