@@ -79,7 +79,7 @@ export function Footer() {
                     </h2>
                 </div>
                 <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-muted-foreground border-t pt-8 gap-4">
-                    <span>© 2024 Bangle Co. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} Bangle Co. All rights reserved.</span>
                     <div className="flex gap-4">
                         <Link href="#" className="hover:text-primary transition-colors">
                             Privacy Policy

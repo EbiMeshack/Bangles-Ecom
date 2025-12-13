@@ -52,7 +52,7 @@ export function Header() {
                         </nav>
                         <div className="p-6 border-t bg-muted/20">
                             <p className="text-xs text-muted-foreground text-center">
-                                © 2024 Bangle Co.
+                                © {new Date().getFullYear()} Bangle Co.
                             </p>
                         </div>
                     </SheetContent>
