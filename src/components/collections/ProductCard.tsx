@@ -45,7 +45,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 </span>
                 <h3 className="w-full font-semibold text-base text-foreground leading-tight truncate">{product.name}</h3>
                 <div className="flex w-full items-center justify-between mt-1">
-                    <p className="font-bold text-lg">${product.price.toFixed(2)}</p>
+                    <p className="font-bold text-lg">₹{product.price.toFixed(2)}</p>
                     <div className="hidden md:flex items-center gap-1.5 text-sm">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                         <span className="font-medium">{product.rating}</span>
