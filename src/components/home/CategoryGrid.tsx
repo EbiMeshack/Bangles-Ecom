@@ -1,24 +1,26 @@
+import { Button } from "@/components/ui/button";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 
 const categories = [
     {
         title: "Bangles",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC_sU1iLkQn0mu9QLnc4RXbdHywcGzB1frWjThGLcZIDxDmNjodyUACEIjUXXWRwpx5Zl3nMpU9cM2l9LNfKXyPLzk-7W5FfglyvzPaMcX0DNduvPud2HquC5zuqQTYrWV1FnQJM6h7OPMPAu5zIxIv5z0DI8BoTynYq6zmpRbNjvanhyzHL6mmHi-PSfCsRaVxhOjNCQW38jxwdcKLfBtplL7K3XL6_fHnv1UrykIAZHu0bf4zZj4ynq7JfDJt5oeU209RQqfFi1o",
+        image: "https://i.pinimg.com/736x/f9/ae/5c/f9ae5cd9221cd279e401ba6a7d7f72f1.jpg",
         alt: "A close-up of intricate gold bangles.",
     },
     {
         title: "Rings",
-        image: "https://i.ibb.co/tMFDkg8g/Chat-GPT-Image-Dec-12-2025-02-33-38-AM.png",
+        image: "https://i.pinimg.com/736x/24/1f/c8/241fc8abe5c1619201e354f902792d6d.jpg",
         alt: "Elegant rings for every occasion.",
     },
     {
         title: "Earrings",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBH0qY5YS0avcfLRWvskUCh6KMNblT8-nPCIrbmZbLtp4K1e15J2UXPUGhP3CRTaUD6K0zD19AIN9gemQ2t92GHdtMQ4XRxUf26D92N4DBx7BfdObRZEFHPhoKDPSduDZsx7JkZWPKHGQSJS0XiUKGG1-FM6jb4EdsxIFdPqEGLdw3EhmlIKe1LjvO_bXvvfQFS7GLJcczMnWFzVWLXa0gJ74pT_MJxVC7Mwu70_5AMDK19tQ2LR4swQKoNUMoc6mEcCel5F0rlgM0",
+        image: "https://i.pinimg.com/736x/fc/8f/88/fc8f888198c0f86f37e5c09b0f162734.jpg",
         alt: "Beautiful earrings to match your style.",
     },
     {
         title: "Necklace",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAnNyDoMD3wmS1l-EeHdOtlsbWEypi8jnTHKpOGxCzGguN7TIB_eEAEnzOFWc7lxJ1pO3fg8yYQX0HSQViqO5qjQYL5QLUy6YZ8roZbLBH5B0cnu0TtNQrTM_Ev0PCaUdVvScnGG93N0Cs4P3Q_wZur91ZdDvqJLxlMrXR1ISC_QqpLGJ7q0l1yFJ1Uzv6q2AWnKpNBJbq1fxootFGpWI4gjRGjnCjA7qKEUwnmBiYxtoQJJjg_ZUensjKipNBzSPoXutPvK346YbM",
+        image: "https://i.pinimg.com/1200x/d3/67/fd/d367fd0bd12f6d6b7e42b4eff3cee3d1.jpg",
         alt: "Stunning necklaces for special moments.",
     },
 ];
@@ -26,14 +28,21 @@ const categories = [
 export function CategoryGrid() {
     return (
         <section className="container mx-auto px-4 py-8 md:px-12">
-            <h2 className="text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">
-                Shop by Category
-            </h2>
+            <div className="flex items-center gap-2 mb-4">
+                <h2 className="text-2xl font-bold leading-tight tracking-[-0.015em]">
+                    Shop by Category
+                </h2>
+                <Link href="/collections">
+                    <Button variant="ghost" size="sm" className="rounded-full hover:bg-gray-100 mt-1 hover:translate-x-2">
+                        <MoveRight className="h-5 w-5 size-5 " />
+                    </Button>
+                </Link>
+            </div>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4">
                 {categories.map((category) => (
                     <Link
                         key={category.title}
-                        href="#"
+                        href={`/collections`}
                         className="group relative flex aspect-square flex-col justify-end overflow-hidden rounded-lg bg-gray-100 bg-cover bg-center p-4 transition-transform hover:scale-105 hover:shadow-lg"
                         style={{
                             backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%), url("${category.image}")`,
