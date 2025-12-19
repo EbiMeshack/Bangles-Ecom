@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterSidebar } from "./FilterSidebar";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "@/components/product/ProductCard";
 import { CollectionSearch } from "./CollectionSearch";
 import { CollectionPagination } from "./CollectionPagination";
 import { MobileFilterDrawer } from "./MobileFilterDrawer";

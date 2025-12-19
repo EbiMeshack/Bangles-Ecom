@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "../globals.css";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { FavoritesProvider } from "@/context/favorites-context";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -22,7 +24,9 @@ export default function RootLayout({
       <body
         className={`${workSans.variable} antialiased font-sans`}
       >
-        {children}
+        <ConvexClientProvider>
+          <FavoritesProvider>{children}</FavoritesProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   );

@@ -1,9 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import { Search, Heart, ShoppingCart, Menu } from "lucide-react";
+import { User, Heart, ShoppingCart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useConvexAuth } from "convex/react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
 
 export function Header() {
+    const { isAuthenticated } = useConvexAuth();
+    const router = useRouter();
     return (
         <header className="sticky top-0 z-50 w-full border-none bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6 relative">
@@ -39,7 +53,7 @@ export function Header() {
 
                             <div className="flex flex-col gap-4 text-muted-foreground">
 
-                                <Link href="#" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
+                                <Link href="/favorites" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
                                     <Heart className="size-5" />
                                     Favorites
                                 </Link>
@@ -86,14 +100,46 @@ export function Header() {
 
                 {/* Actions - Right */}
                 <div className="flex items-center gap-2">
-                    {/* Search - Hidden on Mobile, Visible on Desktop */}
-                    <Button variant="ghost" size="icon" className="hidden md:flex">
-                        <Search className="size-5" />
-                        <span className="sr-only">Search</span>
-                    </Button>
-                    <Button variant="ghost" size="icon" className="hidden md:flex">
-                        <Heart className="size-5" />
-                        <span className="sr-only">Favorites</span>
+                    {/* User Menu - Hidden on Mobile, Visible on Desktop */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="hidden md:flex">
+                                <User className="size-5" />
+                                <span className="sr-only">User menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                            {isAuthenticated ? (
+                                <DropdownMenuItem
+                                    onClick={async () => {
+                                        await authClient.signOut();
+                                        router.push("/");
+                                    }}
+                                    className="cursor-pointer"
+                                >
+                                    Logout
+                                </DropdownMenuItem>
+                            ) : (
+                                <>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/login" className="cursor-pointer">
+                                            Login
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/signup" className="cursor-pointer">
+                                            Signup
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </>
+                            )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
+                        <Link href="/favorites">
+                            <Heart className="size-5" />
+                            <span className="sr-only">Favorites</span>
+                        </Link>
                     </Button>
                     <Button variant="ghost" size="icon">
                         <ShoppingCart className="size-5" />
