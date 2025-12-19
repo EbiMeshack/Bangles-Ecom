@@ -89,7 +89,7 @@ export function CollectionsView({ initialProducts }: CollectionsViewProps) {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 md:px-8">
+        <div className="container mx-auto px-4 py-8 md:px-12">
             {/* Top Search Bar - Centered */}
             <CollectionSearch value={searchQuery} onChange={setSearchQuery} />
 

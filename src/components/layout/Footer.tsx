@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 export function Footer() {
     return (
         <footer className="bg-white/50 dark:bg-black/20 mt-16 py-10 border-t">
-            <div className="container mx-auto px-4 flex flex-col gap-10">
+            <div className="container mx-auto px-4 flex flex-col gap-10 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="flex flex-col gap-4">
                         <h3 className="font-bold text-lg">Bangle Co.</h3>
@@ -79,7 +79,7 @@ export function Footer() {
                     </h2>
                 </div>
                 <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-muted-foreground border-t pt-8 gap-4">
-                    <span>© 2024 Bangle Co. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} Bangle Co. All rights reserved.</span>
                     <div className="flex gap-4">
                         <Link href="#" className="hover:text-primary transition-colors">
                             Privacy Policy

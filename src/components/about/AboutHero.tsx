@@ -2,7 +2,7 @@
 const AboutHero = () => {
     return (
         <section className="bg-gradient-to-b from-transparent to-gray-50/50 dark:to-gray-900/50">
-            <div className="container mx-auto px-4 py-20 md:py-28 text-center">
+            <div className="container mx-auto px-4 py-20 md:py-28 md:pt-50 text-center">
                 <h1 className="text-[#181611] dark:text-gray-100 text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-[-0.02em] mb-6">
                     Weaving Stories in Silver and Gold
                 </h1>

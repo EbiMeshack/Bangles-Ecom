@@ -2,7 +2,7 @@
 const OurStory = () => {
     return (
         <section className="py-20 md:py-32">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 md:px-12">
                 <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                     <div className="order-2 md:order-1">
                         <div className="relative inline-block mb-6">

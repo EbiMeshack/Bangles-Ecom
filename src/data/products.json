@@ -4,7 +4,7 @@
         "name": "Classic Gold Bangle",
         "price": 450,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/07/8b/18/078b18ebfd7b2d279067fe6f6e71fe17.jpg",
         "rating": 4.5,
         "reviews": 120
     },
@@ -13,7 +13,7 @@
         "name": "Ruby Studded Bangle",
         "price": 650,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/0d/5d/33/0d5d3352e48e47f00084d63e73f440ac.jpg",
         "rating": 4.8,
         "reviews": 85
     },
@@ -22,7 +22,7 @@
         "name": "Emerald Elegance",
         "price": 550,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/03/40/57/034057e1caf2657a353a08f9fd89f446.jpg",
         "rating": 4.7,
         "reviews": 92
     },
@@ -31,7 +31,7 @@
         "name": "Silver Oxidized Bangle",
         "price": 120,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/04/a2/4d/04a24d5b4eea20e80abe582d37b03920.jpg",
         "rating": 4.3,
         "reviews": 45
     },
@@ -40,7 +40,7 @@
         "name": "Diamond Dust Bangle",
         "price": 890,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/fb/79/4b/fb794b6a74b2c93247e557b73f4a078c.jpg",
         "rating": 4.9,
         "reviews": 210
     },
@@ -49,7 +49,7 @@
         "name": "Temple Design Kada",
         "price": 380,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/58/2b/dd/582bdd4de4acec92fd51336c1a25e377.jpg",
         "rating": 4.6,
         "reviews": 150
     },
@@ -58,7 +58,7 @@
         "name": "Pearl Cluster Bangle",
         "price": 280,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/ea/02/73/ea02734fefb5bc914a04afca6da28fea.jpg",
         "rating": 4.4,
         "reviews": 78
     },
@@ -67,7 +67,7 @@
         "name": "Kundan Polki Bangle",
         "price": 720,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1608042314453-ae338d80c427?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/c6/3a/b7/c63ab7952f8075dac4d560a690025d0d.jpg",
         "rating": 4.7,
         "reviews": 105
     },
@@ -76,7 +76,7 @@
         "name": "Modern Minimalist Cuff",
         "price": 150,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/eb/38/85/eb38852f7d349bf830c8e160b51cbb2c.jpg",
         "rating": 4.2,
         "reviews": 32
     },
@@ -85,7 +85,7 @@
         "name": "Thread Work Bangle",
         "price": 50,
         "category": "bangles",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/a5/ac/01/a5ac01797cf02c52cc25402a3d7cfa3e.jpg",
         "rating": 4.0,
         "reviews": 25
     },
@@ -94,7 +94,7 @@
         "name": "Diamond Studs",
         "price": 1200,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/08/0b/b0/080bb08955b9269233254270bb877408.jpg",
         "rating": 4.9,
         "reviews": 350
     },
@@ -103,7 +103,7 @@
         "name": "Gold Jhumkas",
         "price": 480,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/75/16/11/7516118b1e8b323e59694e98e6b89e9e.jpg",
         "rating": 4.8,
         "reviews": 280
     },
@@ -112,7 +112,7 @@
         "name": "Pearl Drop Earrings",
         "price": 250,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/53/06/a7/5306a7bff63b763dff61cc48ac569fcb.jpg",
         "rating": 4.5,
         "reviews": 110
     },
@@ -121,7 +121,7 @@
         "name": "Chandbali Earrings",
         "price": 520,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/88/31/22/883122d9d62daa57ddb5b40fc419d12e.jpg",
         "rating": 4.7,
         "reviews": 195
     },
@@ -130,7 +130,7 @@
         "name": "Silver Hoops",
         "price": 90,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/df/7b/de/df7bded5a96c58a2fac5f06d380ffb79.jpg",
         "rating": 4.3,
         "reviews": 88
     },
@@ -139,7 +139,7 @@
         "name": "Crystal Dangler",
         "price": 180,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/d9/c0/02/d9c002868120387324c3bd64a15d56e8.jpg",
         "rating": 4.4,
         "reviews": 65
     },
@@ -148,7 +148,7 @@
         "name": "Rose Gold Studs",
         "price": 350,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/1200x/cb/a1/57/cba15763dfbb7ebfc92af9327babfb74.jpg",
         "rating": 4.6,
         "reviews": 130
     },
@@ -157,7 +157,7 @@
         "name": "Emerald Drops",
         "price": 600,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/8f/98/2c/8f982cc6b39058b57ff72beb2cb59e55.jpg",
         "rating": 4.8,
         "reviews": 95
     },
@@ -166,7 +166,7 @@
         "name": "Antique Temple Earrings",
         "price": 420,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/4f/bf/1d/4fbf1d0da4543fa1bb918812215935d8.jpg",
         "rating": 4.7,
         "reviews": 175
     },
@@ -175,188 +175,188 @@
         "name": "Boho Beaded Earrings",
         "price": 40,
         "category": "earrings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/47/f0/11/47f011a1939493a42b70814c4a1c3f5e.jpg",
         "rating": 4.1,
         "reviews": 30
     },
     {
         "id": "21",
-        "name": "Gold Chain Necklace",
-        "price": 850,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.6,
-        "reviews": 220
+        "name": "Gold Filigree Handmade Indian Necklace",
+        "price": 3520,
+        "category": "necklaces",
+        "image": "https://i.etsystatic.com/9175091/r/il/25fc35/2627807628/il_570xN.2627807628_96j5.jpg",
+        "rating": 4.8,
+        "reviews": 142
     },
     {
         "id": "22",
-        "name": "Diamond Pendant",
-        "price": 1500,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.9,
-        "reviews": 410
+        "name": "Polki Kundan Pendant Necklace Set",
+        "price": 4210,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/14/64/ca/1464ca6cf1e37f5627f7b8403c3fd6f1.jpg",
+        "rating": 4.7,
+        "reviews": 188
     },
     {
         "id": "23",
-        "name": "Pearl Choker",
-        "price": 450,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+        "name": "Turquoise Beaded Handmade Necklace",
+        "price": 1850,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/46/a5/a0/46a5a0dee54408b7d9d380d3adcf88f2.jpg",
         "rating": 4.5,
-        "reviews": 140
-    },
-    {
-        "id": "24",
-        "name": "Temple Necklace Set",
-        "price": 980,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.8,
-        "reviews": 300
-    },
-    {
-        "id": "25",
-        "name": "Layered Gold Chain",
-        "price": 600,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.4,
-        "reviews": 90
-    },
-    {
-        "id": "26",
-        "name": "Silver Oxidized Necklace",
-        "price": 200,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.3,
-        "reviews": 75
-    },
-    {
-        "id": "27",
-        "name": "Ruby & Emerald Set",
-        "price": 1100,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.7,
-        "reviews": 160
-    },
-    {
-        "id": "28",
-        "name": "Minimalist Bar Pendant",
-        "price": 300,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.5,
-        "reviews": 115
-    },
-    {
-        "id": "29",
-        "name": "Mangalsutra",
-        "price": 550,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.9,
-        "reviews": 500
-    },
-    {
-        "id": "30",
-        "name": "Beaded Statement Necklace",
-        "price": 120,
-        "category": "necklace",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.2,
-        "reviews": 50
-    },
-    {
-        "id": "31",
-        "name": "Diamond Solitaire Ring",
-        "price": 2000,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.9,
-        "reviews": 600
-    },
-    {
-        "id": "32",
-        "name": "Gold Band",
-        "price": 350,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.7,
-        "reviews": 450
-    },
-    {
-        "id": "33",
-        "name": "Rose Gold Stackable",
-        "price": 250,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.6,
-        "reviews": 180
-    },
-    {
-        "id": "34",
-        "name": "Emerald Ring",
-        "price": 750,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.8,
-        "reviews": 230
-    },
-    {
-        "id": "35",
-        "name": "Silver Statement Ring",
-        "price": 110,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.4,
         "reviews": 95
     },
     {
-        "id": "36",
-        "name": "Pearl Ring",
-        "price": 300,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.5,
-        "reviews": 140
-    },
-    {
-        "id": "37",
-        "name": "Antique Gold Ring",
-        "price": 420,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.6,
-        "reviews": 125
-    },
-    {
-        "id": "38",
-        "name": "Couple Rings",
-        "price": 600,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.8,
-        "reviews": 350
-    },
-    {
-        "id": "39",
-        "name": "Ruby Ring",
-        "price": 700,
-        "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
-        "rating": 4.7,
+        "id": "24",
+        "name": "22K Gold Plated Indian Necklace Set",
+        "price": 4890,
+        "category": "necklaces",
+        "image": "https://i.etsystatic.com/15855256/r/il/cd5a98/7351272981/il_794xN.7351272981_ey4r.jpg",
+        "rating": 4.9,
         "reviews": 210
     },
     {
-        "id": "40",
-        "name": "Cocktail Ring",
-        "price": 180,
+        "id": "25",
+        "name": "Oxidised Rudraksha Bead Necklace",
+        "price": 1720,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/73/48/68/73486813212e4e750843f29bcd1c27c8.jpg",
+        "rating": 4.4,
+        "reviews": 68
+    },
+    {
+        "id": "26",
+        "name": "Ruby & Turquoise Jadau Necklace",
+        "price": 4380,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/d3/67/fd/d367fd0bd12f6d6b7e42b4eff3cee3d1.jpg",
+        "rating": 4.8,
+        "reviews": 127
+    },
+    {
+        "id": "27",
+        "name": "Hand Painted Meenakari Choker Necklace",
+        "price": 2710,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/88/25/27/88252780201f929e6da258a0996b595b.jpg",
+        "rating": 4.6,
+        "reviews": 102
+    },
+    {
+        "id": "28",
+        "name": "Handmade Meenakari Kundan Necklace",
+        "price": 3990,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/9e/d8/65/9ed865cec0f42c4acbd272a3fdc07e84.jpg",
+        "rating": 4.7,
+        "reviews": 134
+    },
+    {
+        "id": "29",
+        "name": "Pearl and Kundan Rani Haar Necklace Set",
+        "price": 5030,
+        "category": "necklaces",
+        "image": "https://i.etsystatic.com/14214903/r/il/45e19d/1588559218/il_794xN.1588559218_liol.jpg",
+        "rating": 4.9,
+        "reviews": 189
+    },
+    {
+        "id": "30",
+        "name": "Traditional Indian Bridal Necklace",
+        "price": 3640,
+        "category": "necklaces",
+        "image": "https://i.pinimg.com/1200x/2b/72/1c/2b721c6b694856839b199d90a8d7fb7e.jpg",
+        "rating": 4.5,
+        "reviews": 87
+    },
+    {
+        "id": "31",
+        "name": "Vintage Kundan Floral Indian Ring",
+        "price": 2150,
         "category": "rings",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000",
+        "image": "https://i.pinimg.com/736x/2c/4c/ac/2c4cac0b96b0a0d3f2c46a21ff4e1a09.jpg",
+        "rating": 4.7,
+        "reviews": 98
+    },
+    {
+        "id": "32",
+        "name": "Polki Diamond and Emerald Jadau Ring",
+        "price": 3290,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/93/bc/b6/93bcb6e3ecc338e0c2fb76965b8cea4e.jpg",
+        "rating": 4.9,
+        "reviews": 142
+    },
+    {
+        "id": "33",
+        "name": "22K Yellow Gold Indian Handmade Ring",
+        "price": 1980,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/38/5d/21/385d21c3d9def237c38abfb1abbdf56b.jpg",
+        "rating": 4.6,
+        "reviews": 75
+    },
+    {
+        "id": "34",
+        "name": "Traditional 22K Gold Festive Ring",
+        "price": 2740,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/89/04/4c/89044cc38dba0da17b13ff76c26ff827.jpg",
+        "rating": 4.8,
+        "reviews": 105
+    },
+    {
+        "id": "35",
+        "name": "Indian Statement Pearl & Gold Ring",
+        "price": 1890,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/e6/d6/22/e6d622cb2183ba0ee044794a2b98737c.jpg",
+        "rating": 4.5,
+        "reviews": 82
+    },
+    {
+        "id": "36",
+        "name": "Oxidized Silver Ethnic Rings Set",
+        "price": 1320,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/7e/a3/8c/7ea38c2c8154c472b93ced1600a4b53d.jpg",
         "rating": 4.3,
-        "reviews": 60
+        "reviews": 62
+    },
+    {
+        "id": "37",
+        "name": "South Indian Mangalyam Vanki Ring Set",
+        "price": 2480,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/86/b6/a7/86b6a70703dbd47ae878a9a7de2d5f37.jpg",
+        "rating": 4.4,
+        "reviews": 78
+    },
+    {
+        "id": "38",
+        "name": "Artisan Multi-Stone Gold Ring",
+        "price": 2560,
+        "category": "rings",
+        "image": "https://i.pinimg.com/1200x/75/c7/a3/75c7a383ef92931d8c3b264544aaabc2.jpg",
+        "rating": 4.6,
+        "reviews": 91
+    },
+    {
+        "id": "39",
+        "name": "Designer Ethnic Gold Ring",
+        "price": 2999,
+        "category": "rings",
+        "image": "https://i.pinimg.com/736x/88/92/f9/8892f9d61a26d9be1b23ff43034ed8de.jpg",
+        "rating": 4.9,
+        "reviews": 118
+    },
+    {
+        "id": "40",
+        "name": "Elegant Floral Motif Indian Ring",
+        "price": 2210,
+        "category": "rings",
+        "image": "https://i.pinimg.com/736x/8a/2c/47/8a2c475ccf5e1c326ab31e591e5a5474.jpg",
+        "rating": 4.7,
+        "reviews": 102
     }
 ]

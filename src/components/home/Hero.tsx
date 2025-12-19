@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
     return (
-        <div className="container mx-auto px-4 py-6 md:py-10">
+        <div className="container mx-auto px-4 py-6 md:py-10 md:px-12">
             <div
                 className="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-4 text-center"
                 style={{

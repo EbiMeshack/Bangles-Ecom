@@ -26,7 +26,7 @@ export function Contact() {
                             </p>
                             <p className="flex items-center gap-3">
                                 <MapPin className="size-5 text-primary" />
-                                <span>Mumbai, India & New York, USA</span>
+                                <span>Mumbai, India</span>
                             </p>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ const products = categories.map((cat) => productsData.find((p) => p.category ===
 
 export function FeaturedProducts() {
     return (
-        <section className="container mx-auto px-4 py-8">
+        <section className="container mx-auto px-4 py-8 md:px-12">
             <h2 className="text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">
                 Featured Products
             </h2>
