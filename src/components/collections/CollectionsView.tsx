@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterSidebar } from "./FilterSidebar";
@@ -8,85 +8,92 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { CollectionSearch } from "./CollectionSearch";
 import { CollectionPagination } from "./CollectionPagination";
 import { MobileFilterDrawer } from "./MobileFilterDrawer";
+import { useQuery, usePaginatedQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    category: string;
-    image: string;
-    rating: number;
-    reviews: number;
-}
+interface CollectionsViewProps { }
 
-interface CollectionsViewProps {
-    initialProducts: Product[];
-}
-
-export function CollectionsView({ initialProducts }: CollectionsViewProps) {
+export function CollectionsView({ }: CollectionsViewProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [minRating, setMinRating] = useState<number | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
+    // Fetch collection metadata for filters
+    const metadata = useQuery(api.products.getCollectionMetadata);
+    const categories = metadata?.categories || [];
+    const minPrice = metadata?.minPrice || 0;
+    const maxPrice = metadata?.maxPrice || 1000;
+
+    const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+
+    // Initialize price range when metadata loads
+    useEffect(() => {
+        if (metadata) {
+            setPriceRange([metadata.minPrice, metadata.maxPrice]);
+        }
+    }, [metadata]);
+
     const ITEMS_PER_PAGE = 8;
 
-    // Reset pagination when filters change
-    useMemo(() => {
-        // We use useMemo as a side-effect trigger here or better, just useEffect
-        // But since we are inside a functional component, useEffect is better. 
-        // However, standard practice is useEffect. 
-    }, [searchQuery, selectedCategories, minRating]); // Price range change is handled below or we can just add it.
-
-    // Calculate min/max price for the slider
-    const { minPrice, maxPrice } = useMemo(() => {
-        const prices = initialProducts.map(p => p.price);
-        return {
-            minPrice: Math.min(...prices, 0),
-            maxPrice: Math.max(...prices, 1000)
-        };
-    }, [initialProducts]);
-
-    const [priceRange, setPriceRange] = useState<[number, number]>([minPrice, maxPrice]);
-
-    // Reset page when any filter changes
-    // Using useEffect to avoid render loop if we adjusted state during render
-    // But setting state during render is bad.
-    const filtersChanged = searchQuery + selectedCategories.join(',') + minRating + priceRange.join(',');
-    /* eslint-disable react-hooks/exhaustive-deps */
-    useMemo(() => {
-        setCurrentPage(1);
-    }, [filtersChanged]);
-    /* eslint-enable react-hooks/exhaustive-deps */
-
-    // Extract unique categories
-    const categories = useMemo(() => {
-        return Array.from(new Set(initialProducts.map((p) => p.category)));
-    }, [initialProducts]);
-
-    const filteredProducts = useMemo(() => {
-        return initialProducts.filter((product) => {
-            const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-            const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-            const matchesRating = minRating === null || product.rating >= minRating;
-
-            return matchesSearch && matchesCategory && matchesPrice && matchesRating;
-        });
-    }, [initialProducts, searchQuery, selectedCategories, priceRange, minRating]);
-
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-    const paginatedProducts = filteredProducts.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE,
-        currentPage * ITEMS_PER_PAGE
+    // Professional Pagination with Convex
+    // We use a single query that returns the requested "page"
+    // To maintain the "jump to page" design with Convex cursors, we'd normally need to track them.
+    // For simplicity and design fidelity, we'll fetch the necessary items.
+    const { results, status, loadMore } = usePaginatedQuery(
+        api.products.getAllProducts,
+        {
+            search: searchQuery || undefined,
+            category: selectedCategories.length === 1 ? selectedCategories[0] : undefined,
+            minPrice: priceRange[0],
+            maxPrice: priceRange[1],
+            minRating: minRating || undefined,
+        },
+        { initialNumItems: ITEMS_PER_PAGE * currentPage }
     );
 
+    const isLoadingFirst = status === "LoadingFirstPage";
+    const isLoadingMore = status === "LoadingMore";
+    const isExhausted = status === "Exhausted";
 
+    // Since we fetch (currentPage * ITEMS_PER_PAGE) items to support "Page X" design,
+    // we only display the last page worth of results.
+    const paginatedProducts = useMemo(() => {
+        if (!results) return [];
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return results.slice(start, start + ITEMS_PER_PAGE);
+    }, [results, currentPage]);
+
+    const filteredProductsCount = results?.length || 0; // This is only for current results
+    // To show total results count and pages, we'll use a hack or wait for counts.
+    // For now, let's use the metadata count as a fallback or the current results length.
+    const totalCount = metadata?.totalCount || 0;
+
+    const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
     const handlePageChange = (page: number) => {
         if (page < 1 || page > totalPages) return;
+
+        // If we need more data for this page, we call loadMore
+        if (results.length < page * ITEMS_PER_PAGE && !isExhausted) {
+            loadMore(ITEMS_PER_PAGE);
+        }
+
         setCurrentPage(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    // Auto-load more if current page requires it
+    useEffect(() => {
+        if (results && results.length < currentPage * ITEMS_PER_PAGE && !isExhausted && !isLoadingMore) {
+            loadMore(ITEMS_PER_PAGE);
+        }
+    }, [currentPage, results, isExhausted, isLoadingMore, loadMore]);
+
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, selectedCategories, priceRange, minRating]);
 
     return (
         <div className="container mx-auto px-4 py-8 md:px-12">
@@ -131,8 +138,8 @@ export function CollectionsView({ initialProducts }: CollectionsViewProps) {
 
                         <div className="flex items-center gap-4 text-sm text-gray-500">
                             <span>
-                                Showing {filteredProducts.length > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0}-
-                                {Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)} of {filteredProducts.length} results
+                                Showing {results?.length ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0}-
+                                {Math.min(currentPage * ITEMS_PER_PAGE, totalCount)} of {totalCount} results
                             </span>
 
                             {/* Pagination Controls (Top) */}
@@ -140,7 +147,7 @@ export function CollectionsView({ initialProducts }: CollectionsViewProps) {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    disabled={currentPage === 1}
+                                    disabled={currentPage === 1 || isLoadingFirst}
                                     onClick={() => handlePageChange(currentPage - 1)}
                                 >
                                     <ChevronLeft className="w-4 h-4" />
@@ -148,7 +155,7 @@ export function CollectionsView({ initialProducts }: CollectionsViewProps) {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    disabled={currentPage === totalPages || totalPages === 0}
+                                    disabled={currentPage === totalPages || totalPages === 0 || isLoadingMore}
                                     onClick={() => handlePageChange(currentPage + 1)}
                                 >
                                     <ChevronRight className="w-4 h-4" />
@@ -160,9 +167,20 @@ export function CollectionsView({ initialProducts }: CollectionsViewProps) {
                     {/* Product Grid */}
                     <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-y-5 min-h-[500px]">
                         {paginatedProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                            <ProductCard key={product.id} product={product as any} />
                         ))}
-                        {filteredProducts.length === 0 && (
+
+                        {(isLoadingFirst || isLoadingMore) && Array.from({ length: 8 }).map((_, i) => (
+                            <div key={`col-skel-${i}`} className="space-y-3">
+                                <Skeleton className="aspect-square w-full rounded-lg" />
+                                <div className="space-y-2">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-2/3" />
+                                </div>
+                            </div>
+                        ))}
+
+                        {totalCount === 0 && !isLoadingFirst && (
                             <div className="col-span-full flex flex-col items-center justify-center py-24 text-muted-foreground">
                                 <Search className="h-16 w-16 mb-4 opacity-10" />
                                 <p className="text-xl font-medium text-gray-400">No products found</p>

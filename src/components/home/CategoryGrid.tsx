@@ -19,7 +19,7 @@ const categories = [
         alt: "Beautiful earrings to match your style.",
     },
     {
-        title: "Necklace",
+        title: "Necklaces",
         image: "https://i.pinimg.com/1200x/d3/67/fd/d367fd0bd12f6d6b7e42b4eff3cee3d1.jpg",
         alt: "Stunning necklaces for special moments.",
     },

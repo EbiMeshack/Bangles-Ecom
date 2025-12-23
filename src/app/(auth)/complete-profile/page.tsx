@@ -5,20 +5,19 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
-    CardTitle,
+    CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { api } from "@/convex/_generated/api";
 import { authClient } from "@/lib/auth-client";
+import { completeProfileSchema, type CompleteProfileFormData } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { api } from "../../../../convex/_generated/api";
-import { completeProfileSchema, type CompleteProfileFormData } from "@/schemas/auth.schema";
 
 
 

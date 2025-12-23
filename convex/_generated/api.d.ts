@@ -10,6 +10,8 @@
 
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
+import type * as products from "../products.js";
+import type * as reviews from "../reviews.js";
 import type * as userProfiles from "../userProfiles.js";
 
 import type {
@@ -21,6 +23,8 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   http: typeof http;
+  products: typeof products;
+  reviews: typeof reviews;
   userProfiles: typeof userProfiles;
 }>;
 
