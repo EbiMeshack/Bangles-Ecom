@@ -14,7 +14,7 @@ export function CartItem({ item }: CartItemProps) {
     const { updateQuantity, removeFromCart } = useCart();
 
     return (
-        <div className="flex gap-4 py-4 p-2 border border-border rounded-lg mb-3">
+        <div className="flex gap-4 py-3 p-2 border border-border rounded-lg mb-3">
             <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <Image
                     src={item.image}
@@ -27,10 +27,10 @@ export function CartItem({ item }: CartItemProps) {
             <div className="flex flex-1 flex-col justify-between">
                 <div>
                     <div className="flex justify-between">
-                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                        <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
                             <a href={`/product/${item.id}`}>{item.name}</a>
                         </h3>
-                        <p className="ml-4 text-sm font-medium text-gray-900 border px-1 rounded-sm">
+                        <p className="ml-4 text-sm font-medium text-gray-900 px-1 rounded-sm">
                             {formatCurrency(item.price)}
                         </p>
                     </div>
@@ -43,17 +43,17 @@ export function CartItem({ item }: CartItemProps) {
                             variant="outline"
                             size="icon"
                             className="h-6 w-6"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            disabled={item.quantity <= 1}
+                            onClick={() => updateQuantity(item.id, item.cartQuantity - 1)}
+                            disabled={item.cartQuantity <= 1}
                         >
                             <Minus className="h-3 w-3" />
                         </Button>
-                        <span className="w-4 text-center">{item.quantity}</span>
+                        <span className="w-4 text-center">{item.cartQuantity}</span>
                         <Button
                             variant="outline"
                             size="icon"
                             className="h-6 w-6"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.cartQuantity + 1)}
                         >
                             <Plus className="h-3 w-3" />
                         </Button>

@@ -4,7 +4,7 @@ import "../globals.css";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { FavoritesProvider } from "@/context/favorites-context";
 import { CartProvider } from "@/context/CartContext";
-
+import { Toaster } from "@/components/ui/sonner";
 const workSans = Work_Sans({
   variable: "--font-work-sans",
   subsets: ["latin"],
@@ -28,6 +28,7 @@ export default function RootLayout({
         <ConvexClientProvider>
           <CartProvider>
             <FavoritesProvider>
+              <Toaster position="top-right" />
               {children}
             </FavoritesProvider>
           </CartProvider>

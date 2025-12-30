@@ -48,6 +48,7 @@ export const getAllProducts = query({
                     image: product.image,
                     rating: Math.round(averageRating * 10) / 10,
                     reviews: reviews.length,
+                    stockQuantity: product.quantity,
                 };
             })
         );
@@ -97,6 +98,7 @@ export const getProductsByCategory = query({
                     image: product.image,
                     rating: Math.round(averageRating * 10) / 10,
                     reviews: reviews.length,
+                    stockQuantity: product.quantity,
                 };
             })
         );
@@ -139,6 +141,7 @@ export const getFeaturedProducts = query({
                     image: product.image,
                     rating: Math.round(averageRating * 10) / 10,
                     reviews: reviews.length,
+                    stockQuantity: product.quantity,
                 };
             })
         );
@@ -182,6 +185,7 @@ export const getProductsByIds = query({
                     image: product.image,
                     rating: Math.round(averageRating * 10) / 10,
                     reviews: reviews.length,
+                    stockQuantity: product.quantity,
                 };
             })
         );
@@ -238,6 +242,7 @@ export const getRelatedProducts = query({
                     image: product.image,
                     rating: Math.round(averageRating * 10) / 10,
                     reviews: reviews.length,
+                    stockQuantity: product.quantity,
                 };
             })
         );

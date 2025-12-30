@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Star, ShoppingCart, Heart, Minus, Plus } from "lucide-react";
+import { Star, ShoppingCart, Heart, Minus, Plus, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -16,14 +16,31 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetails({ product }: ProductDetailsProps) {
-    const { addToCart } = useCart();
+    const { addToCart, cart } = useCart();
     const { isFavorite, toggleFavorite } = useFavorites();
     const [quantity, setQuantity] = useState(1);
     const favorited = isFavorite(product.id);
 
+    // Calculate how many are already in cart
+    const cartItem = cart.find((item) => item.id === product.id);
+    const quantityInCart = cartItem?.cartQuantity || 0;
+    const availableToAdd = product.stockQuantity - quantityInCart;
+    const isOutOfStock = product.stockQuantity <= 0;
+    const isMaxReached = availableToAdd <= 0;
+
     const handleAddToCart = () => {
-        for (let i = 0; i < quantity; i++) {
+        if (isOutOfStock || isMaxReached) return;
+
+        const qtyToAdd = Math.min(quantity, availableToAdd);
+        for (let i = 0; i < qtyToAdd; i++) {
             addToCart(product);
+        }
+        setQuantity(1);
+    };
+
+    const handleIncreaseQuantity = () => {
+        if (quantity < availableToAdd) {
+            setQuantity(quantity + 1);
         }
     };
 
@@ -48,6 +65,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                         <Heart className={cn("size-5", favorited && "fill-red-500 text-red-500")} />
                         <span className="sr-only">Toggle favorite</span>
                     </Button>
+                    {isOutOfStock && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <span className="text-white text-2xl font-bold">Out of Stock</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Product Info */}
@@ -72,20 +94,38 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                         {formatCurrency(product.price)}
                     </p>
 
+                    {/* Stock Status */}
+                    <div className="flex items-center gap-2">
+                        {isOutOfStock ? (
+                            <span className="text-destructive font-medium flex items-center gap-1">
+                                <AlertCircle className="w-4 h-4" />
+                                Out of Stock
+                            </span>
+                        ) : product.stockQuantity <= 5 ? (
+                            <p className="text-orange-500 text-sm font-medium">
+                                Only {product.stockQuantity} left in stock
+                            </p>
+                        ) : (
+                            <p className="text-green-600 text-sm font-medium">
+                                In Stock ({product.stockQuantity} available)
+                            </p>
+                        )}
+                    </div>
+
                     <p className="text-muted-foreground leading-relaxed">
                         Experience the elegance of our handcrafted {product.category}. Each piece is meticulously designed to reflect timeless beauty and sophisticated style, making it the perfect addition to your jewelry collection.
                     </p>
 
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium">Quantity</span>
-                            <div className="flex items-center border rounded-full px-2 py-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
+                        <div className="flex items-center justify-between sm:justify-start gap-4 p-1 border rounded-full w-full sm:w-auto sm:border-0 sm:p-0">
+                            <span className="text-sm font-medium ml-3 sm:ml-0">Quantity</span>
+                            <div className="flex items-center border rounded-full px-2 py-1 bg-background sm:bg-transparent">
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     className="h-8 w-8 rounded-full"
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                    disabled={quantity <= 1}
+                                    disabled={quantity <= 1 || isOutOfStock}
                                 >
                                     <Minus className="h-4 w-4" />
                                 </Button>
@@ -94,7 +134,8 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                                     variant="ghost"
                                     size="icon"
                                     className="h-8 w-8 rounded-full"
-                                    onClick={() => setQuantity(quantity + 1)}
+                                    onClick={handleIncreaseQuantity}
+                                    disabled={quantity >= availableToAdd || isOutOfStock}
                                 >
                                     <Plus className="h-4 w-4" />
                                 </Button>
@@ -102,15 +143,23 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                         </div>
 
                         <Button
-                            className="rounded-full h-10 text-sm font-bold uppercase tracking-wider"
+                            className="w-full sm:w-auto sm:flex-1 rounded-full h-12 sm:h-10 text-sm font-bold uppercase tracking-wider"
                             onClick={handleAddToCart}
+                            disabled={isOutOfStock || isMaxReached}
                         >
                             <ShoppingCart className="mr-2 h-4 w-4" />
-                            Add to Cart
+                            {isOutOfStock ? "Out of Stock" : isMaxReached ? "Max in Cart" : "Add to Cart"}
                         </Button>
                     </div>
+
+                    {quantityInCart > 0 && !isOutOfStock && (
+                        <p className="text-sm text-muted-foreground">
+                            You have {quantityInCart} in your cart
+                        </p>
+                    )}
                 </div>
             </div>
         </section>
     );
 }
+

@@ -30,7 +30,7 @@ export function CartItemList() {
                                         <h3 className="text-sm">
                                             <Link
                                                 href={`/product/${item.id}`}
-                                                className="font-medium text-gray-700 hover:text-gray-800"
+                                                className="font-medium text-gray-700 hover:text-gray-800 line-clamp-1"
                                             >
                                                 {item.name}
                                             </Link>
@@ -43,7 +43,7 @@ export function CartItemList() {
                                 </div>
 
                                 <div className="mt-4 sm:mt-0 sm:pr-9">
-                                    <div className="absolute right-0 top-0">
+                                    <div className="absolute right-0 bottom-[-12] sm:top-0 sm:bottom-auto">
                                         <label htmlFor={`quantity-${item.id}`} className="sr-only">
                                             Quantity, {item.name}
                                         </label>
@@ -52,24 +52,24 @@ export function CartItemList() {
                                                 type="button"
                                                 className="p-2 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
                                                 onClick={() => {
-                                                    if (item.quantity === 1) {
+                                                    if (item.cartQuantity === 1) {
                                                         removeFromCart(item.id);
                                                     } else {
-                                                        updateQuantity(item.id, item.quantity - 1);
+                                                        updateQuantity(item.id, item.cartQuantity - 1);
                                                     }
                                                 }}
                                             >
-                                                {item.quantity === 1 ? (
+                                                {item.cartQuantity === 1 ? (
                                                     <Trash2 className="h-4 w-4 text-red-500" />
                                                 ) : (
                                                     <Minus className="h-4 w-4" />
                                                 )}
                                             </button>
-                                            <span className="px-4 text-gray-900 font-medium">{item.quantity}</span>
+                                            <span className="px-4 text-gray-900 font-medium">{item.cartQuantity}</span>
                                             <button
                                                 type="button"
                                                 className="p-2 text-gray-600 hover:bg-gray-100"
-                                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                onClick={() => updateQuantity(item.id, item.cartQuantity + 1)}
                                             >
                                                 <Plus className="h-4 w-4" />
                                             </button>

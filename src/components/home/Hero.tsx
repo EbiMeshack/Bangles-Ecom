@@ -10,10 +10,10 @@ export function Hero() {
                 }}
             >
                 <div className="max-w-3xl space-y-2">
-                    <h1 className="text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">
+                    <h1 className="text-primary-foreground text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">
                         Adorn Your Traditions.
                     </h1>
-                    <h2 className="text-white text-sm md:text-base font-normal">
+                    <h2 className="text-primary-foreground text-sm md:text-base font-normal">
                         Discover handcrafted Indian bangles for every occasion.
                     </h2>
                 </div>

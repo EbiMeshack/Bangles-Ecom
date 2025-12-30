@@ -174,7 +174,7 @@ export default function SignupPage() {
                         <Input
                             id="phone"
                             type="tel"
-                            placeholder="+1 (555) 000-0000"
+                            placeholder="+91 "
                             className="h-11"
                             {...register("phone")}
                             disabled={isLoading}
@@ -214,6 +214,7 @@ export default function SignupPage() {
                         <Input
                             id="password"
                             type="password"
+                            placeholder="Enter your password"
                             className="h-11"
                             {...register("password")}
                             disabled={isLoading}
@@ -235,6 +236,7 @@ export default function SignupPage() {
                         <Input
                             id="confirmPassword"
                             type="password"
+                            placeholder="Enter your password again"
                             className="h-11"
                             {...register("confirmPassword")}
                             disabled={isLoading}

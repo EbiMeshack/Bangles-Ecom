@@ -6,4 +6,5 @@ export interface Product {
     image: string;
     rating: number;
     reviews: number;
+    stockQuantity: number; // Available stock
 }
