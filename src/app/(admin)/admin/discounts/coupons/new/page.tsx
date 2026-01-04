@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, CalendarIcon } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -120,18 +121,19 @@ export default function NewCouponPage() {
     };
 
     return (
-        <div className="space-y-6 max-w-4xl mx-auto">
-            <div className="flex items-center gap-4">
+        <div className="space-y-6">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+                <SidebarTrigger className="-ml-1" />
+                <span className="font-medium">Create Coupon</span>
+            </header>
+            <div className="flex items-center gap-2">
                 <Link href="/admin/discounts/coupons">
                     <Button variant="ghost" size="icon">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
                 </Link>
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Create New Coupon</h1>
-                    <p className="text-muted-foreground">
-                        Add a new discount code for your customers
-                    </p>
+                    <h1 className="text-xl font-semibold tracking-tight">Back to Coupons</h1>
                 </div>
             </div>
 

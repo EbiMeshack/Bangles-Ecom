@@ -3,7 +3,8 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
-import { Plus, Edit, Trash2, Search, Tag, Calendar, Users, TrendingUp } from "lucide-react";
+import { Plus, Edit, Trash2, Search, Filter, MoreHorizontal } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
@@ -33,36 +34,69 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
+import { format } from "date-fns";
+import { EditCouponSheet } from "@/components/admin/discounts/EditCouponSheet";
+import { Doc } from "@/convex/_generated/dataModel";
 
 export default function CouponsPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [filterActive, setFilterActive] = useState<boolean | undefined>(undefined);
+    const [statusFilter, setStatusFilter] = useState("all");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
-    const coupons = useQuery(api.coupons.list, { isActive: filterActive });
+    // Convert status filter to boolean or undefined for the query
+    const isActiveArg = statusFilter === "all" ? undefined : statusFilter === "active";
+
+    const coupons = useQuery(api.coupons.list, { isActive: isActiveArg });
     const removeCoupon = useMutation(api.coupons.remove);
+    const [couponToDelete, setCouponToDelete] = useState<Id<"coupons"> | null>(null);
+    const [couponToEdit, setCouponToEdit] = useState<Doc<"coupons"> | null>(null);
+    const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
 
     const filteredCoupons = coupons?.filter(coupon =>
         coupon.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
         coupon.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleDelete = async (id: Id<"coupons">) => {
+    // Pagination logic
+    const totalPages = Math.ceil((filteredCoupons?.length || 0) / itemsPerPage);
+    const paginatedCoupons = filteredCoupons?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handleDelete = async () => {
+        if (!couponToDelete) return;
         try {
-            await removeCoupon({ id });
+            await removeCoupon({ id: couponToDelete });
+            setCouponToDelete(null);
         } catch (error) {
             console.error("Failed to delete coupon:", error);
             alert("Failed to delete coupon");
         }
-    };
-
-    const formatDate = (timestamp: number) => {
-        return new Date(timestamp).toLocaleDateString("en-IN", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-        });
     };
 
     const getDiscountDisplay = (coupon: any) => {
@@ -82,120 +116,85 @@ export default function CouponsPage() {
         return Date.now() > expiryDate;
     };
 
+    // Calculate stats
+    const totalCoupons = coupons?.length || 0;
+    const activeCoupons = coupons?.filter(c => c.isActive && !isExpired(c.expiryDate)).length || 0;
+    const totalUses = coupons?.reduce((sum, c) => sum + c.stats.totalUsages, 0) || 0;
+    const totalDiscount = coupons?.reduce((sum, c) => sum + c.stats.totalDiscount, 0) || 0;
+
     return (
         <div className="space-y-6">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Coupons</h1>
-                    <p className="text-muted-foreground">
-                        Manage discount codes and promotional offers
-                    </p>
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+                <SidebarTrigger className="-ml-1" />
+                <span className="font-medium">Coupons</span>
+            </header>
+            {/* Stats Cards */}
+            <div className="grid gap-4 md:grid-cols-4">
+                <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-muted-foreground">Total Coupons</h3>
+                    <div className="text-2xl font-bold mt-2">{coupons ? totalCoupons : <Skeleton className="h-8 w-16" />}</div>
+                    <p className="text-xs text-muted-foreground mt-1">All time created</p>
                 </div>
-                <Link href="/admin/discounts/coupons/new">
-                    <Button>
-                        <Plus className="mr-2 h-4 w-4" />
-                        Create Coupon
-                    </Button>
-                </Link>
+                <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-muted-foreground">Active Coupons</h3>
+                    <div className="text-2xl font-bold mt-2">{coupons ? activeCoupons : <Skeleton className="h-8 w-16" />}</div>
+                    <p className="text-xs text-muted-foreground mt-1">Currently valid</p>
+                </div>
+                <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-muted-foreground">Total Uses</h3>
+                    <div className="text-2xl font-bold mt-2">{coupons ? totalUses : <Skeleton className="h-8 w-16" />}</div>
+                    <p className="text-xs text-muted-foreground mt-1">across all orders</p>
+                </div>
+                <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-muted-foreground">Total Discount</h3>
+                    <div className="text-2xl font-bold mt-2">{coupons ? `₹${totalDiscount.toFixed(2)}` : <Skeleton className="h-8 w-16" />}</div>
+                    <p className="text-xs text-muted-foreground mt-1">Given to customers</p>
+                </div>
             </div>
 
-            {/* Stats Cards */}
-            {coupons && (
-                <div className="grid gap-4 md:grid-cols-4">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Coupons</CardTitle>
-                            <Tag className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{coupons.length}</div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Active Coupons</CardTitle>
-                            <TrendingUp className="h-4 w-4 text-emerald-600" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
-                                {coupons.filter(c => c.isActive && !isExpired(c.expiryDate)).length}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Uses</CardTitle>
-                            <Users className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
-                                {coupons.reduce((sum, c) => sum + c.stats.totalUsages, 0)}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Discount Given</CardTitle>
-                            <Calendar className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
-                                ₹{coupons.reduce((sum, c) => sum + c.stats.totalDiscount, 0).toFixed(2)}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-            )}
-
-            {/* Filters */}
+            {/* Main Content Card */}
             <Card>
                 <CardHeader>
-                    <div className="flex items-center gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                placeholder="Search coupons..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-8"
-                            />
-                        </div>
-                        <div className="flex gap-2">
-                            <Button
-                                variant={filterActive === undefined ? "default" : "outline"}
-                                onClick={() => setFilterActive(undefined)}
-                            >
-                                All
-                            </Button>
-                            <Button
-                                variant={filterActive === true ? "default" : "outline"}
-                                onClick={() => setFilterActive(true)}
-                            >
-                                Active
-                            </Button>
-                            <Button
-                                variant={filterActive === false ? "default" : "outline"}
-                                onClick={() => setFilterActive(false)}
-                            >
-                                Inactive
-                            </Button>
-                        </div>
-                    </div>
+                    <CardTitle>All Coupons</CardTitle>
+                    <CardDescription>
+                        View and manage all discount coupons.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {!coupons ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            Loading coupons...
+                    <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-center">
+                        <div className="relative w-full md:w-72">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search coupons..."
+                                className="pl-8 rounded-full"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-                    ) : filteredCoupons && filteredCoupons.length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            No coupons found
+                        <div className="flex items-center gap-2 w-full md:w-auto">
+                            <Link href="/admin/discounts/coupons/new">
+                                <Button className="rounded-full whitespace-nowrap">
+                                    <Plus className="mr-2 h-4 w-4" />
+                                    Create Coupon
+                                </Button>
+                            </Link>
+                            <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                <SelectTrigger className="w-full md:w-[180px]">
+                                    <div className="flex items-center gap-2">
+                                        <Filter className="h-4 w-4 text-muted-foreground" />
+                                        <SelectValue placeholder="All Status" />
+                                    </div>
+                                </SelectTrigger>
+                                <SelectContent position="popper">
+                                    <SelectItem value="all">All Status</SelectItem>
+                                    <SelectItem value="active">Active</SelectItem>
+                                    <SelectItem value="inactive">Inactive</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
-                    ) : (
+                    </div>
+
+                    <div className="rounded-md border">
                         <Table>
                             <TableHeader>
                                 <TableRow>
@@ -205,86 +204,160 @@ export default function CouponsPage() {
                                     <TableHead>Valid Until</TableHead>
                                     <TableHead>Usage</TableHead>
                                     <TableHead>Status</TableHead>
-                                    <TableHead className="text-right">Actions</TableHead>
+                                    <TableHead className="w-[70px]"></TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {filteredCoupons?.map((coupon) => (
-                                    <TableRow key={coupon._id}>
-                                        <TableCell className="font-mono font-semibold">
-                                            {coupon.code}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="secondary">
-                                                {getDiscountDisplay(coupon)}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="text-sm text-muted-foreground">
-                                            {getApplicationTypeDisplay(coupon)}
-                                        </TableCell>
-                                        <TableCell className="text-sm">
-                                            {formatDate(coupon.expiryDate)}
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="text-sm">
-                                                <div>{coupon.stats.totalUsages} uses</div>
-                                                <div className="text-xs text-muted-foreground">
-                                                    {coupon.stats.uniqueUsers} users
-                                                </div>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            {isExpired(coupon.expiryDate) ? (
-                                                <Badge variant="destructive">Expired</Badge>
-                                            ) : coupon.isActive ? (
-                                                <Badge variant="default" className="bg-emerald-600">
-                                                    Active
-                                                </Badge>
-                                            ) : (
-                                                <Badge variant="secondary">Inactive</Badge>
-                                            )}
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                <Link href={`/admin/discounts/coupons/${coupon._id}`}>
-                                                    <Button variant="ghost" size="sm">
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                </Link>
-                                                <AlertDialog>
-                                                    <AlertDialogTrigger asChild>
-                                                        <Button variant="ghost" size="sm">
-                                                            <Trash2 className="h-4 w-4 text-destructive" />
-                                                        </Button>
-                                                    </AlertDialogTrigger>
-                                                    <AlertDialogContent>
-                                                        <AlertDialogHeader>
-                                                            <AlertDialogTitle>Delete Coupon?</AlertDialogTitle>
-                                                            <AlertDialogDescription>
-                                                                Are you sure you want to delete coupon "{coupon.code}"?
-                                                                This action cannot be undone and will delete all usage history.
-                                                            </AlertDialogDescription>
-                                                        </AlertDialogHeader>
-                                                        <AlertDialogFooter>
-                                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                            <AlertDialogAction
-                                                                onClick={() => handleDelete(coupon._id)}
-                                                                className="bg-destructive text-destructive-foreground"
-                                                            >
-                                                                Delete
-                                                            </AlertDialogAction>
-                                                        </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                </AlertDialog>
-                                            </div>
+                                {coupons === undefined ? (
+                                    Array(5).fill(0).map((_, i) => (
+                                        <TableRow key={i}>
+                                            <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+                                            <TableCell><Skeleton className="h-8 w-8" /></TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : paginatedCoupons?.length === 0 ? (
+                                    <TableRow>
+                                        <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                                            No coupons found matching your filters.
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                ) : (
+                                    paginatedCoupons?.map((coupon) => (
+                                        <TableRow key={coupon._id}>
+                                            <TableCell className="font-mono font-semibold">
+                                                {coupon.code}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary">
+                                                    {getDiscountDisplay(coupon)}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="text-sm text-muted-foreground">
+                                                {getApplicationTypeDisplay(coupon)}
+                                            </TableCell>
+                                            <TableCell className="text-sm">
+                                                {format(coupon.expiryDate, "MMM d, yyyy")}
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className="text-sm">
+                                                    <div>{coupon.stats.totalUsages} uses</div>
+                                                    <div className="text-xs text-muted-foreground">
+                                                        {coupon.stats.uniqueUsers} users
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                {isExpired(coupon.expiryDate) ? (
+                                                    <Badge variant="destructive">Expired</Badge>
+                                                ) : coupon.isActive ? (
+                                                    <Badge variant="default" className="bg-emerald-600">
+                                                        Active
+                                                    </Badge>
+                                                ) : (
+                                                    <Badge variant="secondary">Inactive</Badge>
+                                                )}
+                                            </TableCell>
+                                            <TableCell>
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" className="h-8 w-8 p-0">
+                                                            <span className="sr-only">Open menu</span>
+                                                            <MoreHorizontal className="h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuItem
+                                                            className="cursor-pointer"
+                                                            onClick={() => {
+                                                                setCouponToEdit(coupon);
+                                                                setIsEditSheetOpen(true);
+                                                            }}
+                                                        >
+                                                            <Edit className="mr-2 h-4 w-4" />
+                                                            Edit
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem
+                                                            onClick={() => setCouponToDelete(coupon._id)}
+                                                            className="text-red-600 focus:text-red-600 cursor-pointer"
+                                                        >
+                                                            <Trash2 className="mr-2 h-4 w-4" />
+                                                            Delete
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
                             </TableBody>
                         </Table>
+                    </div>
+
+                    {totalPages > 1 && (
+                        <div className="mt-4 flex justify-end">
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious
+                                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                        />
+                                    </PaginationItem>
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                        <PaginationItem key={page}>
+                                            <PaginationLink
+                                                isActive={currentPage === page}
+                                                onClick={() => setCurrentPage(page)}
+                                                className="cursor-pointer"
+                                            >
+                                                {page}
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    ))}
+                                    <PaginationItem>
+                                        <PaginationNext
+                                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                        />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </div>
                     )}
                 </CardContent>
             </Card>
+
+            <AlertDialog open={!!couponToDelete} onOpenChange={(open) => !open && setCouponToDelete(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the coupon
+                            and all its usage history.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+                            Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+
+            <EditCouponSheet
+                coupon={couponToEdit}
+                isOpen={isEditSheetOpen}
+                onClose={() => {
+                    setIsEditSheetOpen(false);
+                    setCouponToEdit(null);
+                }}
+            />
         </div>
     );
 }

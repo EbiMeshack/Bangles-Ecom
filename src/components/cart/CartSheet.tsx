@@ -62,7 +62,11 @@ export function CartSheet() {
                                 </Link>
                             </SheetClose>
 
-                            <Button className="w-full h-10 text-base">Checkout</Button>
+                            <SheetClose asChild>
+                                <Link href="/checkout" className="w-full block">
+                                    <Button className="w-full h-10 text-base">Checkout</Button>
+                                </Link>
+                            </SheetClose>
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>

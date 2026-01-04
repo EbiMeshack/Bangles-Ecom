@@ -30,21 +30,12 @@ const data = {
       url: "/admin",
       icon: LayoutDashboard,
       isActive: true,
-      items: [
-        {
-          title: "Overview",
-          url: "/admin",
-        },
-        {
-          title: "Analytics",
-          url: "/admin/analytics",
-        },
-      ],
     },
     {
       title: "Products",
       url: "/admin/products",
       icon: Package,
+      isActive: true,
       items: [
         {
           title: "All Products",
@@ -54,57 +45,22 @@ const data = {
           title: "Add Product",
           url: "/admin/products/new",
         },
-        {
-          title: "Categories",
-          url: "/admin/products/categories",
-        },
-        {
-          title: "Inventory",
-          url: "/admin/products/inventory",
-        },
       ],
     },
     {
       title: "Orders",
       url: "/admin/orders",
       icon: ShoppingCart,
-      items: [
-        {
-          title: "All Orders",
-          url: "/admin/orders",
-        },
-        {
-          title: "Pending",
-          url: "/admin/orders/pending",
-        },
-        {
-          title: "Completed",
-          url: "/admin/orders/completed",
-        },
-        {
-          title: "Returns",
-          url: "/admin/orders/returns",
-        },
-      ],
     },
     {
       title: "Customers",
       url: "/admin/customers",
       icon: Users,
-      items: [
-        {
-          title: "All Customers",
-          url: "/admin/customers",
-        },
-        {
-          title: "Reviews",
-          url: "/admin/customers/reviews",
-        },
-      ],
     },
     {
       title: "Discounts",
-      url: "/admin/discounts",
+      url: "/admin/discounts/coupons",
+      isActive: true,
       icon: Tags,
       items: [
         {
@@ -112,9 +68,9 @@ const data = {
           url: "/admin/discounts/coupons",
         },
         {
-          title: "Sales",
-          url: "/admin/discounts/sales",
-        },
+          title: "Add Coupon",
+          url: "/admin/discounts/coupons/new",
+        }
       ],
     },
     {
@@ -136,25 +92,7 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "/admin/settings",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "/admin/settings",
-        },
-        {
-          title: "Payments",
-          url: "/admin/settings/payments",
-        },
-        {
-          title: "Shipping",
-          url: "/admin/settings/shipping",
-        },
-      ],
-    },
+
   ],
 }
 

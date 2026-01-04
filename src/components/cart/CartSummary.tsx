@@ -63,7 +63,9 @@ export function CartSummary() {
             </dl>
 
             <div className="mt-6">
-                <Button className="w-full text-base py-6">Checkout</Button>
+                <Link href="/checkout">
+                    <Button className="w-full text-base py-6">Checkout</Button>
+                </Link>
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-500">

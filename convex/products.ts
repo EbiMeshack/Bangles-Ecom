@@ -1,7 +1,26 @@
-import { query } from "./_generated/server";
+import { query, mutation, QueryCtx, MutationCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { paginationOptsValidator } from "convex/server";
 import { Id, Doc } from "./_generated/dataModel";
+import { authComponent } from "./auth";
+
+async function checkAdmin(ctx: QueryCtx | MutationCtx) {
+    const authUser = await authComponent.getAuthUser(ctx);
+    if (!authUser) {
+        throw new Error("Unauthorized");
+    }
+
+    const profile = await ctx.db
+        .query("userProfiles")
+        .withIndex("by_userId", (q) => q.eq("userId", authUser.userId ?? authUser._id))
+        .first();
+
+    if (!profile || profile.role !== "admin") {
+        throw new Error("Unauthorized: Admin access required");
+    }
+
+    return { authUser, profile };
+}
 
 // Query to get all products with professional pagination and filtering
 export const getAllProducts = query({
@@ -246,5 +265,85 @@ export const getRelatedProducts = query({
                 };
             })
         );
+    },
+});
+
+// --- ADMIN OPERATIONS ---
+
+// Query to get all products for admin dashboard (paginated, search)
+export const getAdminProducts = query({
+    args: {
+        paginationOpts: paginationOptsValidator,
+        search: v.optional(v.string()),
+    },
+    handler: async (ctx, args) => {
+        await checkAdmin(ctx);
+
+        let productsQuery = ctx.db.query("products").order("desc");
+
+        const result = await productsQuery.paginate(args.paginationOpts);
+
+        let page = result.page;
+        if (args.search) {
+            const searchLower = args.search.toLowerCase();
+            page = page.filter(p => p.name.toLowerCase().includes(searchLower) || p.category.toLowerCase().includes(searchLower));
+        }
+
+        return {
+            ...result,
+            page,
+        };
+    },
+});
+
+export const createProduct = mutation({
+    args: {
+        name: v.string(),
+        price: v.number(),
+        category: v.string(),
+        image: v.string(),
+        quantity: v.number(),
+    },
+    handler: async (ctx, args) => {
+        await checkAdmin(ctx);
+
+        const productId = await ctx.db.insert("products", {
+            name: args.name,
+            price: args.price,
+            category: args.category,
+            image: args.image,
+            quantity: args.quantity,
+        });
+
+        return productId;
+    },
+});
+
+export const updateProduct = mutation({
+    args: {
+        id: v.id("products"),
+        name: v.optional(v.string()),
+        price: v.optional(v.number()),
+        category: v.optional(v.string()),
+        image: v.optional(v.string()),
+        quantity: v.optional(v.number()),
+    },
+    handler: async (ctx, args) => {
+        await checkAdmin(ctx);
+
+        const { id, ...updates } = args;
+
+        await ctx.db.patch(id, updates);
+    },
+});
+
+export const deleteProduct = mutation({
+    args: {
+        id: v.id("products"),
+    },
+    handler: async (ctx, args) => {
+        await checkAdmin(ctx);
+
+        await ctx.db.delete(args.id);
     },
 });

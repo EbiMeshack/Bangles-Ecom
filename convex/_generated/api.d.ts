@@ -8,10 +8,13 @@
  * @module
  */
 
+import type * as analytics from "../analytics.js";
 import type * as auth from "../auth.js";
 import type * as coupons from "../coupons.js";
 import type * as http from "../http.js";
+import type * as orders from "../orders.js";
 import type * as products from "../products.js";
+import type * as razorpay from "../razorpay.js";
 import type * as reviews from "../reviews.js";
 import type * as userProfiles from "../userProfiles.js";
 
@@ -22,10 +25,13 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  analytics: typeof analytics;
   auth: typeof auth;
   coupons: typeof coupons;
   http: typeof http;
+  orders: typeof orders;
   products: typeof products;
+  razorpay: typeof razorpay;
   reviews: typeof reviews;
   userProfiles: typeof userProfiles;
 }>;

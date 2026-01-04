@@ -97,4 +97,31 @@ export default defineSchema({
         .index("by_couponId", ["couponId"])
         .index("by_userId", ["userId"])
         .index("by_coupon_and_user", ["couponId", "userId"]), // Check per-user usage
+
+    // Orders table
+    orders: defineTable({
+        orderNumber: v.string(),
+        userId: v.string(),
+        amount: v.number(),
+        status: v.union(v.literal("pending"), v.literal("completed"), v.literal("cancelled"), v.literal("refunded")),
+        items: v.array(v.object({
+            productId: v.id("products"),
+            quantity: v.number(),
+            price: v.number(),
+            name: v.string(), // Snapshot of product name
+            image: v.optional(v.string()) // Snapshot of product image
+        })),
+        shippingAddress: v.object({
+            street: v.string(),
+            city: v.string(),
+            state: v.string(),
+            zip: v.string(),
+            country: v.string(),
+        }),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+    })
+        .index("by_userId", ["userId"])
+        .index("by_status", ["status"])
+        .index("by_createdAt", ["createdAt"]),
 });

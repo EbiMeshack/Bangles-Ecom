@@ -150,7 +150,7 @@ export function Header() {
                     <Link href="/collections" className="text-sm font-medium hover:text-primary transition-colors">
                         Collections
                     </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                    <Link href="/orders" className="text-sm font-medium hover:text-primary transition-colors">
                         Orders
                     </Link>
                     <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">

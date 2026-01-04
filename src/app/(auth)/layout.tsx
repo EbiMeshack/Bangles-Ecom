@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "../globals.css";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { RedirectAuthenticatedUser } from "@/components/AdminAuthMiddleware";
 
 const workSans = Work_Sans({
     variable: "--font-work-sans",
@@ -24,7 +25,9 @@ export default function RootLayout({
                 className={`${workSans.variable} antialiased font-sans`}
             >
                 <ConvexClientProvider>
-                    {children}
+                    <RedirectAuthenticatedUser>
+                        {children}
+                    </RedirectAuthenticatedUser>
                 </ConvexClientProvider>
             </body>
         </html>

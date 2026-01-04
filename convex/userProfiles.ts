@@ -1,6 +1,28 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query, QueryCtx, MutationCtx } from "./_generated/server";
 import { authComponent } from "./auth";
+
+/**
+ * Helper to check if the current user is an admin.
+ * Throws an error if not authenticated or not an admin.
+ */
+async function checkAdmin(ctx: QueryCtx | MutationCtx) {
+    const authUser = await authComponent.getAuthUser(ctx);
+    if (!authUser) {
+        throw new Error("Unauthorized");
+    }
+
+    const profile = await ctx.db
+        .query("userProfiles")
+        .withIndex("by_userId", (q) => q.eq("userId", authUser.userId ?? authUser._id))
+        .first();
+
+    if (!profile || profile.role !== "admin") {
+        throw new Error("Unauthorized: Admin access required");
+    }
+
+    return { authUser, profile };
+}
 
 /**
  * Create a new user profile
@@ -84,7 +106,22 @@ export const getCurrentUserProfile = query({
 });
 
 /**
+ * Get all user profiles (Admin only)
+ */
+export const getAllUserProfiles = query({
+    args: {},
+    handler: async (ctx) => {
+        await checkAdmin(ctx);
+
+        const profiles = await ctx.db.query("userProfiles").collect();
+        return profiles;
+    },
+});
+
+/**
  * Update user profile
+ * - Users can update their own non-sensitive fields.
+ * - Admins can update all fields including role.
  */
 export const updateUserProfile = mutation({
     args: {
@@ -95,17 +132,41 @@ export const updateUserProfile = mutation({
         name: v.optional(v.string()),
     },
     handler: async (ctx, args) => {
-        // Find the existing profile
-        const profile = await ctx.db
+        const authUser = await authComponent.getAuthUser(ctx);
+        if (!authUser) {
+            throw new Error("Unauthorized");
+        }
+
+        // Fetch user's profile to check role
+        const requesterProfile = await ctx.db
+            .query("userProfiles")
+            .withIndex("by_userId", (q) => q.eq("userId", authUser.userId ?? authUser._id))
+            .first();
+
+        const isAdmin = requesterProfile?.role === "admin";
+
+        // Find the target profile to update
+        const targetProfile = await ctx.db
             .query("userProfiles")
             .withIndex("by_userId", (q) => q.eq("userId", args.userId))
             .first();
 
-        if (!profile) {
+        if (!targetProfile) {
             throw new Error("User profile not found");
         }
 
-        // Update the profile (only update provided fields)
+        // Authorization check
+        const isSelf = (authUser.userId ?? authUser._id) === args.userId;
+
+        if (!isAdmin && !isSelf) {
+            throw new Error("Unauthorized: You can only update your own profile");
+        }
+
+        if (!isAdmin && args.role && args.role !== targetProfile.role) {
+            throw new Error("Unauthorized: Only admins can change roles");
+        }
+
+        // Update the profile 
         const updates: any = {
             updatedAt: Date.now(),
         };
@@ -117,15 +178,20 @@ export const updateUserProfile = mutation({
             updates.phoneNumber = args.phoneNumber;
         }
         if (args.role !== undefined) {
-            updates.role = args.role;
+            // Logic above ensures non-admins can't change role to something else
+            // If they send their current role it's fine, if they send diff role, it throws.
+            // But to be safer, strictly only allow role update if admin
+            if (isAdmin) {
+                updates.role = args.role;
+            }
         }
         if (args.name !== undefined) {
             updates.name = args.name;
         }
 
-        await ctx.db.patch(profile._id, updates);
+        await ctx.db.patch(targetProfile._id, updates);
 
-        return profile._id;
+        return targetProfile._id;
     },
 });
 
@@ -148,13 +214,15 @@ export const getUsersByRole = query({
 });
 
 /**
- * Delete user profile
+ * Delete user profile (Admin only)
  */
 export const deleteUserProfile = mutation({
     args: {
         userId: v.string(),
     },
     handler: async (ctx, args) => {
+        await checkAdmin(ctx);
+
         const profile = await ctx.db
             .query("userProfiles")
             .withIndex("by_userId", (q) => q.eq("userId", args.userId))

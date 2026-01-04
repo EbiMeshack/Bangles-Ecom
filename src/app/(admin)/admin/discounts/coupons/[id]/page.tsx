@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import { format } from "date-fns";
 import { ArrowLeft, CalendarIcon, Loader2 } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, use } from "react";
@@ -157,19 +158,21 @@ export default function EditCouponPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-        <div className="space-y-6 max-w-4xl mx-auto">
+        <div className="space-y-6">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+                <SidebarTrigger className="-ml-1" />
+                <span className="font-medium">Edit Coupon</span>
+            </header>
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                     <Link href="/admin/discounts/coupons">
                         <Button variant="ghost" size="icon">
                             <ArrowLeft className="h-4 w-4" />
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Edit Coupon</h1>
-                        <p className="text-muted-foreground">
-                            Update coupon configuration
-                        </p>
+                        <h1 className="text-xl font-semibold tracking-tight">Back to Coupons</h1>
+
                     </div>
                 </div>
             </div>
