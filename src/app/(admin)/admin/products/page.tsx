@@ -21,6 +21,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Plus, MoreHorizontal, Edit, Trash2, Search } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ProductSheet } from "@/components/admin/products/ProductSheet";
@@ -35,9 +36,6 @@ export default function AdminProductsPage() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Doc<"products"> | null>(null);
 
-    // Using pagination with a large limit for now to simulate "all" with search
-    // Ideally use usePaginatedQuery but for simplicity with search filtering we'll grab a chunk
-    // Use the getAdminProducts query we created
     const productsResult = useQuery(api.products.getAdminProducts, {
         paginationOpts: { numItems: 50, cursor: null },
         search: search
@@ -71,97 +69,110 @@ export default function AdminProductsPage() {
 
     return (
         <div className="space-y-6">
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-6">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10 transition-all">
                 <SidebarTrigger className="-ml-1" />
-                <span className="font-medium">Products</span>
+                <div className="flex flex-col flex-1">
+                    <span className="font-semibold text-lg leading-tight">Products</span>
+                    <span className="text-xs text-muted-foreground hidden md:inline">Manage your product catalog</span>
+                </div>
             </header>
 
-            <div className="flex items-center justify-between py-4">
-                <div className="relative w-full max-w-sm">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Search products..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="pl-8 rounded-full"
-                    />
-                </div>
-                <Link href="/admin/products/new">
-                    <Button className="rounded-full">
-                        <Plus className="mr-2 h-4 w-4" /> Add Product
-                    </Button>
-                </Link>
-            </div>
+            <Card>
+                <CardHeader>
+                    <CardTitle>All Products</CardTitle>
+                    <CardDescription>
+                        Manage your store products, view their details and stock.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="relative w-full max-w-sm">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search products..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="pl-8 rounded-full"
+                            />
+                        </div>
+                        <Link href="/admin/products/new">
+                            <Button className="rounded-full">
+                                <Plus className="mr-2 h-4 w-4" /> Add Product
+                            </Button>
+                        </Link>
+                    </div>
 
-            <div className="rounded-md border bg-card">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-[80px]">Image</TableHead>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Price</TableHead>
-                            <TableHead>Stock</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {productsResult === undefined ? (
-                            <TableRow>
-                                <TableCell colSpan={6} className="h-24 text-center">
-                                    Loading products...
-                                </TableCell>
-                            </TableRow>
-                        ) : products.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={6} className="h-24 text-center">
-                                    No products found.
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            products.map((product) => (
-                                <TableRow key={product._id}>
-                                    <TableCell>
-                                        <div className="relative h-10 w-10">
-                                            <Image
-                                                src={product.image}
-                                                alt={product.name}
-                                                fill
-                                                className="rounded-md object-cover"
-                                            />
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="font-medium">{product.name}</TableCell>
-                                    <TableCell>{product.category}</TableCell>
-                                    <TableCell>{formatCurrency(product.price)}</TableCell>
-                                    <TableCell>{product.quantity}</TableCell>
-                                    <TableCell className="text-right">
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                                    <span className="sr-only">Open menu</span>
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem onClick={() => handleEdit(product)} className="cursor-pointer">
-                                                    <Edit className="mr-2 h-4 w-4" /> Edit
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem
-                                                    onClick={() => handleDelete(product._id)}
-                                                    className="text-red-600 focus:text-red-600 cursor-pointer"
-                                                >
-                                                    <Trash2 className="mr-2 h-4 w-4" /> Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
+                    <div className="rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[80px]">Image</TableHead>
+                                    <TableHead>Name</TableHead>
+                                    <TableHead>Category</TableHead>
+                                    <TableHead>Price</TableHead>
+                                    <TableHead>Stock</TableHead>
+                                    <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
-                            ))
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+                            </TableHeader>
+                            <TableBody>
+                                {productsResult === undefined ? (
+                                    <TableRow>
+                                        <TableCell colSpan={6} className="h-24 text-center">
+                                            Loading products...
+                                        </TableCell>
+                                    </TableRow>
+                                ) : products.length === 0 ? (
+                                    <TableRow>
+                                        <TableCell colSpan={6} className="h-24 text-center">
+                                            No products found.
+                                        </TableCell>
+                                    </TableRow>
+                                ) : (
+                                    products.map((product) => (
+                                        <TableRow key={product._id}>
+                                            <TableCell>
+                                                <div className="relative h-10 w-10">
+                                                    <Image
+                                                        src={product.image}
+                                                        alt={product.name}
+                                                        fill
+                                                        className="rounded-md object-cover"
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="font-medium">{product.name}</TableCell>
+                                            <TableCell>{product.category}</TableCell>
+                                            <TableCell>{formatCurrency(product.price)}</TableCell>
+                                            <TableCell>{product.quantity}</TableCell>
+                                            <TableCell className="text-right">
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" className="h-8 w-8 p-0">
+                                                            <span className="sr-only">Open menu</span>
+                                                            <MoreHorizontal className="h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuItem onClick={() => handleEdit(product)} className="cursor-pointer">
+                                                            <Edit className="mr-2 h-4 w-4" /> Edit
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem
+                                                            onClick={() => handleDelete(product._id)}
+                                                            className="text-red-600 focus:text-red-600 cursor-pointer"
+                                                        >
+                                                            <Trash2 className="mr-2 h-4 w-4" /> Delete
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
+            </Card>
 
             <ProductSheet
                 isOpen={isSheetOpen}

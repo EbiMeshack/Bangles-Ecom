@@ -69,9 +69,12 @@ export default function NewProductPage() {
 
     return (
         <div className="space-y-6">
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10 transition-all">
                 <SidebarTrigger className="-ml-1" />
-                <span className="font-medium">Create Product</span>
+                <div className="flex flex-col flex-1">
+                    <span className="font-semibold text-lg leading-tight">Create Product</span>
+                    <span className="text-xs text-muted-foreground hidden md:inline">Add a new item to your store</span>
+                </div>
             </header>
             <div className="flex items-center gap-2">
                 <Link href="/admin/products">

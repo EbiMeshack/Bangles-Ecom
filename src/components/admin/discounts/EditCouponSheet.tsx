@@ -1,27 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
-import { useForm, Controller, Resolver } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "@/lib/utils";
 import { couponSchema, type CouponFormValues } from "@/schemas/coupon.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "convex/react";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { cn, formatCurrency } from "@/lib/utils";
+import { useEffect } from "react";
+import { Controller, Resolver, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface EditCouponSheetProps {
     coupon: Doc<"coupons"> | null;
@@ -137,18 +135,16 @@ export function EditCouponSheet({ coupon, isOpen, onClose }: EditCouponSheetProp
 
     return (
         <Sheet open={isOpen} onOpenChange={onClose}>
-            <SheetContent className="flex flex-col h-full sm:max-w-[600px] overflow-hidden">
-                <SheetHeader className="px-1 shrink-0">
+            <SheetContent className="flex w-full flex-col sm:max-w-lg">
+                <SheetHeader>
                     <SheetTitle>Edit Coupon</SheetTitle>
                     <SheetDescription>
                         Modify coupon details and constraints.
                     </SheetDescription>
                 </SheetHeader>
 
-
-
-                <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col min-h-0 pt-4 overflow-hidden">
-                    <div className="flex-1 overflow-y-auto px-1 space-y-6 pr-2">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
                         {/* Basic Information */}
                         <div className="space-y-4">
                             <h3 className="text-sm font-medium border-b pb-1 text-primary">Basic Info</h3>
@@ -421,7 +417,7 @@ export function EditCouponSheet({ coupon, isOpen, onClose }: EditCouponSheetProp
                         </div>
                     </div>
 
-                    <SheetFooter className="shrink-0 mt-auto px-1 pt-6 pb-2 border-t">
+                    <div className="border-t border-gray-200 p-6">
                         <Button type="submit" disabled={isSubmitting} className="w-full">
                             {isSubmitting ? (
                                 <>
@@ -430,7 +426,7 @@ export function EditCouponSheet({ coupon, isOpen, onClose }: EditCouponSheetProp
                                 </>
                             ) : "Save changes"}
                         </Button>
-                    </SheetFooter>
+                    </div>
                 </form>
             </SheetContent>
         </Sheet>

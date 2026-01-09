@@ -5,7 +5,6 @@ export const getDashboardStats = query({
     args: {},
     handler: async (ctx) => {
         const orders = await ctx.db.query("orders").collect();
-        console.log("Dashboard Stats: Found orders:", orders.length);
 
         const totalRevenue = orders.reduce((sum, order) => sum + order.amount, 0);
         const totalOrders = orders.length;
@@ -21,13 +20,8 @@ export const getDashboardStats = query({
 
         const recentOrders = [...orders].sort((a, b) => b.createdAt - a.createdAt).slice(0, 5);
 
-        // --- Analytics Data Calculation ---
-        const days = 30;
-        const now = Date.now();
-        const pastDate = now - days * 24 * 60 * 60 * 1000;
-
-        // Filter orders for the last 30 days for the chart
-        const recentOrdersForChart = orders.filter(o => o.createdAt >= pastDate);
+        // Using ALL orders for charts (change this to filter by date range if needed)
+        const recentOrdersForChart = orders;
 
         const revenueByDate: Record<string, number> = {};
         const statusCounts: Record<string, number> = {};

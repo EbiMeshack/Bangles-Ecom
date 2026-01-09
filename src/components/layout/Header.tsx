@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User, Heart, ShoppingCart, Menu, LogOut, Package, Settings, LogIn, UserPlus, ChevronDown } from "lucide-react";
+import { User, Heart, ShoppingCart, Menu, LogOut, Package, Settings, LogIn, UserPlus, ChevronDown, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -13,8 +13,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { authClient } from "@/lib/auth-client";
+import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { CartSheet } from "@/components/cart/CartSheet";
@@ -27,6 +28,12 @@ export function Header() {
     // Get user data directly from the session instead of querying the database
     const { data: session } = authClient.useSession();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+    const userProfile = useQuery(api.userProfiles.getCurrentUserProfile,
+        isAuthenticated ? {} : "skip"
+    );
+
+    const isAdmin = userProfile?.role === "admin";
 
     const handleLogout = async () => {
         await authClient.signOut();
@@ -97,6 +104,12 @@ export function Header() {
 
                                         {isProfileOpen && (
                                             <div className="flex flex-col gap-4 pl-4 animate-in slide-in-from-top-2 fade-in-0 duration-200">
+                                                {isAdmin && (
+                                                    <Link href="/admin" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
+                                                        <LayoutDashboard className="size-5" />
+                                                        Admin Dashboard
+                                                    </Link>
+                                                )}
                                                 <Link href="/profile" className="flex items-center gap-3 text-lg font-medium hover:text-foreground transition-colors">
                                                     <User className="size-5" />
                                                     Profile
@@ -181,6 +194,14 @@ export function Header() {
                                         </div>
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
+                                    {isAdmin && (
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/admin" className="cursor-pointer w-full flex items-center">
+                                                <LayoutDashboard className="mr-2 h-4 w-4" />
+                                                <span>Admin Dashboard</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    )}
                                     <DropdownMenuItem asChild>
                                         <Link href="/profile" className="cursor-pointer w-full flex items-center">
                                             <User className="mr-2 h-4 w-4" />
@@ -191,12 +212,6 @@ export function Header() {
                                         <Link href="/orders" className="cursor-pointer w-full flex items-center">
                                             <Package className="mr-2 h-4 w-4" />
                                             <span>Orders</span>
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/settings" className="cursor-pointer w-full flex items-center">
-                                            <Settings className="mr-2 h-4 w-4" />
-                                            <span>Settings</span>
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />

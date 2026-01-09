@@ -132,9 +132,12 @@ export default function OrdersPage() {
 
     return (
         <div className="space-y-6">
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10 transition-all">
                 <SidebarTrigger className="-ml-1" />
-                <span className="font-medium">Orders</span>
+                <div className="flex flex-col flex-1">
+                    <span className="font-semibold text-lg leading-tight">Orders</span>
+                    <span className="text-xs text-muted-foreground hidden md:inline">Manage customer orders</span>
+                </div>
             </header>
             <div className="grid gap-4 md:grid-cols-4">
                 <div className="rounded-lg border bg-card p-6 shadow-sm">
