@@ -3,7 +3,7 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CalendarIcon } from "lucide-react";
+import { ArrowLeft, CalendarIcon, TicketPercent, IndianRupee, Layers, CalendarClock, Activity, Gauge } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -122,9 +122,12 @@ export default function NewCouponPage() {
 
     return (
         <div className="space-y-6">
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 -mx-4 -mt-4 mb-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10 transition-all">
                 <SidebarTrigger className="-ml-1" />
-                <span className="font-medium">Create Coupon</span>
+                <div className="flex flex-col flex-1">
+                    <span className="font-semibold text-lg leading-tight">Create Coupon</span>
+                    <span className="text-xs text-muted-foreground hidden md:inline">Create a new discount code</span>
+                </div>
             </header>
             <div className="flex items-center gap-2">
                 <Link href="/admin/discounts/coupons">
@@ -141,7 +144,10 @@ export default function NewCouponPage() {
                 {/* Basic Information */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Basic Information</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <TicketPercent className="h-4 w-4 text-primary" />
+                            <CardTitle>Basic Information</CardTitle>
+                        </div>
                         <CardDescription>
                             Define the coupon code and description
                         </CardDescription>
@@ -181,7 +187,10 @@ export default function NewCouponPage() {
                 {/* Discount Configuration */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Discount Configuration</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <IndianRupee className="h-4 w-4 text-primary" />
+                            <CardTitle>Discount Configuration</CardTitle>
+                        </div>
                         <CardDescription>
                             Set how much discount to apply
                         </CardDescription>
@@ -250,7 +259,10 @@ export default function NewCouponPage() {
                 {/* Applicability */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Applicability</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <Layers className="h-4 w-4 text-primary" />
+                            <CardTitle>Applicability</CardTitle>
+                        </div>
                         <CardDescription>
                             Choose where this coupon can be applied
                         </CardDescription>
@@ -363,7 +375,10 @@ export default function NewCouponPage() {
                 {/* Usage Limits */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Usage Limits</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <Gauge className="h-4 w-4 text-primary" />
+                            <CardTitle>Usage Limits</CardTitle>
+                        </div>
                         <CardDescription>
                             Control how many times the coupon can be used
                         </CardDescription>
@@ -398,7 +413,10 @@ export default function NewCouponPage() {
                 {/* Validity Period */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Validity Period</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <CalendarClock className="h-4 w-4 text-primary" />
+                            <CardTitle>Validity Period</CardTitle>
+                        </div>
                         <CardDescription>
                             Set when the coupon is valid
                         </CardDescription>
@@ -478,7 +496,10 @@ export default function NewCouponPage() {
                 {/* Status */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Status</CardTitle>
+                        <div className="flex items-center gap-2">
+                            <Activity className="h-4 w-4 text-primary" />
+                            <CardTitle>Status</CardTitle>
+                        </div>
                         <CardDescription>
                             Enable or disable the coupon
                         </CardDescription>

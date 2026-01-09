@@ -53,15 +53,15 @@ export function EditOrderSheet({ order, isOpen, onClose }: EditOrderSheetProps) 
 
     return (
         <Sheet open={isOpen} onOpenChange={onClose}>
-            <SheetContent className="flex flex-col h-full">
-                <SheetHeader className="px-1">
+            <SheetContent className="flex w-full flex-col sm:max-w-lg">
+                <SheetHeader>
                     <SheetTitle>Edit Order Status</SheetTitle>
                     <SheetDescription>
                         Update the status of the order.
                     </SheetDescription>
                 </SheetHeader>
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 pt-6">
-                    <div className="flex-1 overflow-y-auto space-y-4 px-1">
+                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="orderNumber">Order Number</Label>
                             <div className="p-2 border rounded-md bg-muted text-sm text-muted-foreground">
@@ -83,11 +83,11 @@ export function EditOrderSheet({ order, isOpen, onClose }: EditOrderSheetProps) 
                             </Select>
                         </div>
                     </div>
-                    <SheetFooter className="mt-auto px-1 pt-6 pb-2">
+                    <div className="border-t border-gray-200 p-6">
                         <Button type="submit" disabled={isLoading} className="w-full">
                             {isLoading ? "Saving..." : "Save changes"}
                         </Button>
-                    </SheetFooter>
+                    </div>
                 </form>
             </SheetContent>
         </Sheet>

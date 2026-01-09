@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { api } from "@/convex/_generated/api";
+import { Doc } from "@/convex/_generated/dataModel";
+import { useMutation } from "convex/react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Doc, Id } from "@/convex/_generated/dataModel";
 
 interface ProductSheetProps {
     product: Doc<"products"> | null;
@@ -89,15 +89,15 @@ export function ProductSheet({ product, isOpen, onClose }: ProductSheetProps) {
 
     return (
         <Sheet open={isOpen} onOpenChange={onClose}>
-            <SheetContent className="flex flex-col h-full">
-                <SheetHeader className="px-1">
+            <SheetContent className="flex w-full flex-col sm:max-w-lg">
+                <SheetHeader>
                     <SheetTitle>{product ? "Edit Product" : "Add Product"}</SheetTitle>
                     <SheetDescription>
                         {product ? "Make changes to the product here." : "Add a new product to your inventory."}
                     </SheetDescription>
                 </SheetHeader>
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 pt-6">
-                    <div className="flex-1 overflow-y-auto px-1 space-y-4">
+                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
                             <Input
@@ -152,11 +152,11 @@ export function ProductSheet({ product, isOpen, onClose }: ProductSheetProps) {
                             />
                         </div>
                     </div>
-                    <SheetFooter className="mt-auto px-1 pt-6 pb-2">
+                    <div className="border-t border-gray-200 p-6">
                         <Button type="submit" disabled={isLoading} className="w-full">
                             {isLoading ? "Saving..." : (product ? "Save Changes" : "Create Product")}
                         </Button>
-                    </SheetFooter>
+                    </div>
                 </form>
             </SheetContent>
         </Sheet>

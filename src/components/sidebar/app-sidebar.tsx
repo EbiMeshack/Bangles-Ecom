@@ -73,25 +73,7 @@ const data = {
         }
       ],
     },
-    {
-      title: "Reports",
-      url: "/admin/reports",
-      icon: BarChart3,
-      items: [
-        {
-          title: "Sales Report",
-          url: "/admin/reports/sales",
-        },
-        {
-          title: "Revenue",
-          url: "/admin/reports/revenue",
-        },
-        {
-          title: "Top Products",
-          url: "/admin/reports/top-products",
-        },
-      ],
-    },
+
 
   ],
 }
