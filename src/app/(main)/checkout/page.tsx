@@ -15,7 +15,7 @@ import { authClient } from "@/lib/auth-client";
 
 export default function CheckoutPage() {
     const router = useRouter();
-    const { cart, totalPrice, subtotal, discountAmount, clearCart } = useCart();
+    const { cart, totalPrice, subtotal, discountAmount, clearCart, couponId } = useCart();
     const [isProcessing, setIsProcessing] = useState(false);
     const { isAuthenticated } = useConvexAuth();
     const { data: session } = authClient.useSession();
@@ -69,6 +69,8 @@ export default function CheckoutPage() {
                     country: formData.country,
                 },
                 amount: totalPrice,
+                couponId: couponId || undefined,
+                discountValue: discountAmount > 0 ? discountAmount : undefined,
             });
 
             // 2. Create Razorpay Order

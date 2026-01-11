@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query, internalMutation } from "./_generated/server";
 import { authComponent } from "./auth";
 
 async function requireAdmin(ctx: any) {
@@ -396,22 +396,34 @@ export const applyCoupon = mutation({
         orderId: v.optional(v.string()),
     },
     handler: async (ctx, { couponId, userId, discountApplied, orderId }) => {
-        await ctx.db.insert("couponUsages", {
-            couponId,
-            userId,
-            orderId,
-            discountApplied,
-            usedAt: Date.now(),
-        });
-
-        const coupon = await ctx.db.get(couponId);
-        if (coupon) {
-            await ctx.db.patch(couponId, {
-                currentUsageCount: coupon.currentUsageCount + 1,
-                updatedAt: Date.now(),
-            });
-        }
+        await markCouponUsed(ctx, { couponId, userId, discountApplied, orderId });
 
         return { success: true };
     },
 });
+
+export const markCouponUsed = async (
+    ctx: any,
+    args: {
+        couponId: string;
+        userId: string;
+        discountApplied: number;
+        orderId?: string;
+    }
+) => {
+    await ctx.db.insert("couponUsages", {
+        couponId: args.couponId,
+        userId: args.userId,
+        orderId: args.orderId,
+        discountApplied: args.discountApplied,
+        usedAt: Date.now(),
+    });
+
+    const coupon = await ctx.db.get(args.couponId);
+    if (coupon) {
+        await ctx.db.patch(args.couponId, {
+            currentUsageCount: coupon.currentUsageCount + 1,
+            updatedAt: Date.now(),
+        });
+    }
+};

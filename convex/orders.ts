@@ -1,11 +1,8 @@
 import { query, mutation, QueryCtx, MutationCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { authComponent } from "./auth";
+import { markCouponUsed } from "./coupons";
 
-/**
- * Helper to check if the current user is an admin.
- * Throws an error if not authenticated or not an admin.
- */
 async function checkAdmin(ctx: QueryCtx | MutationCtx) {
     const authUser = await authComponent.getAuthUser(ctx);
     if (!authUser) {
@@ -44,6 +41,8 @@ export const create = mutation({
             country: v.string(),
         }),
         amount: v.number(),
+        couponId: v.optional(v.id("coupons")),
+        discountValue: v.optional(v.number()),
     },
     handler: async (ctx, args) => {
         const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
@@ -58,6 +57,15 @@ export const create = mutation({
             createdAt: Date.now(),
             updatedAt: Date.now(),
         });
+
+        if (args.couponId && args.discountValue) {
+            await markCouponUsed(ctx, {
+                couponId: args.couponId,
+                userId: args.userId,
+                discountApplied: args.discountValue,
+                orderId: orderId,
+            });
+        }
 
         return { orderId, orderNumber };
     },

@@ -5,6 +5,7 @@ import { Product } from "@/types/product";
 import { useConvex } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { authClient } from "@/lib/auth-client";
 
 export interface CartItem extends Product {
     cartQuantity: number; // Number of items in cart
@@ -25,6 +26,7 @@ interface CartContextType {
 
     // Coupon related
     couponCode: string | null;
+    couponId: Id<"coupons"> | null;
     discountAmount: number;
     isCouponApplied: boolean;
     applyCoupon: (code: string) => Promise<{ success: boolean; message: string }>;
@@ -39,6 +41,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const { data: session } = authClient.useSession();
+    const userId = session?.user?.id ?? "guest";
 
     // Coupon state
     const [couponCode, setCouponCode] = useState<string | null>(null);
@@ -116,7 +120,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         try {
             const result = await convex.query(api.coupons.validateCoupon, {
                 code: couponCode,
-                userId: "guest", // Placeholder
+                userId,
                 cartItems: cart.map(item => ({
                     productId: item.id as Id<"products">,
                     quantity: item.cartQuantity,
@@ -144,7 +148,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         try {
             const result = await convex.query(api.coupons.validateCoupon, {
                 code,
-                userId: "guest", // Placeholder until we integrate AuthContext
+                userId,
                 cartItems: cart.map(item => ({
                     productId: item.id as Id<"products">,
                     quantity: item.cartQuantity,
@@ -241,6 +245,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 isLoaded,
 
                 couponCode,
+                couponId,
                 discountAmount,
                 isCouponApplied: !!couponCode,
                 applyCoupon,
