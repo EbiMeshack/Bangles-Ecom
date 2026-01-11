@@ -29,7 +29,7 @@ export default defineSchema({
         price: v.number(),
         category: v.string(),
         image: v.string(),
-        quantity: v.number(),
+        quantity: v.optional(v.number()),
         // Note: rating and reviews are calculated dynamically from the reviews table
     }).index("by_category", ["category"]),
 
