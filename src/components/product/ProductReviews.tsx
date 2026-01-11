@@ -12,9 +12,14 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Star, MessageSquare } from "lucide-react";
+import { Star, MessageSquare, Loader2, X } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
+import { useMutation } from "convex/react";
+import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 interface ProductReviewsProps {
     productId: string;
@@ -25,6 +30,49 @@ export function ProductReviews({ productId, count }: ProductReviewsProps) {
     const reviews = useQuery(api.reviews.getReviewsByProductId, {
         productId: productId as Id<"products">,
     });
+
+    const { data: session } = authClient.useSession();
+    const addReview = useMutation(api.reviews.addReview);
+
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showForm, setShowForm] = useState(false);
+    const [hoverRating, setHoverRating] = useState(0);
+
+    const handleSubmit = async () => {
+        if (!session?.user) {
+            toast.error("Please sign in to write a review");
+            return;
+        }
+        if (rating === 0) {
+            toast.error("Please select a rating");
+            return;
+        }
+        if (!comment.trim()) {
+            toast.error("Please write a comment");
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            await addReview({
+                productId: productId as Id<"products">,
+                userId: session.user.id,
+                rating,
+                comment,
+            });
+            toast.success("Review submitted successfully");
+            setRating(0);
+            setComment("");
+            setShowForm(false);
+        } catch (error) {
+            toast.error("Failed to submit review");
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <Sheet>
@@ -103,9 +151,83 @@ export function ProductReviews({ productId, count }: ProductReviewsProps) {
                 </div>
 
                 <div className="border-t p-6">
-                    <Button variant="outline" className="w-full rounded-full" disabled>
-                        Write a Review (Coming Soon)
-                    </Button>
+                    {!showForm ? (
+                        <Button
+                            variant="outline"
+                            className="w-full rounded-full"
+                            onClick={() => {
+                                if (!session?.user) {
+                                    toast.error("Please sign in to write a review");
+                                    return;
+                                }
+                                setShowForm(true);
+                            }}
+                        >
+                            Write a Review
+                        </Button>
+                    ) : (
+                        <div className="space-y-4 animate-in slide-in-from-bottom-5 fade-in duration-300">
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="font-semibold text-sm">Write your review</h3>
+                                <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => setShowForm(false)}>
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            </div>
+
+                            <div className="flex gap-1 justify-center py-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <button
+                                        key={star}
+                                        type="button"
+                                        className="focus:outline-none transition-transform hover:scale-110"
+                                        onMouseEnter={() => setHoverRating(star)}
+                                        onMouseLeave={() => setHoverRating(0)}
+                                        onClick={() => setRating(star)}
+                                    >
+                                        <Star
+                                            className={cn(
+                                                "w-8 h-8 transition-all duration-200",
+                                                (hoverRating || rating) >= star
+                                                    ? "fill-yellow-400 text-yellow-400"
+                                                    : "fill-transparent text-gray-300 hover:text-yellow-200"
+                                            )}
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+
+                            <Textarea
+                                placeholder="Share your thoughts about this product..."
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                className="min-h-[100px] resize-none"
+                            />
+
+                            <div className="flex gap-2">
+                                <Button
+                                    className="flex-1"
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitting || rating === 0 || !comment.trim()}
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Submitting...
+                                        </>
+                                    ) : (
+                                        "Submit Review"
+                                    )}
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={() => setShowForm(false)}
+                                    disabled={isSubmitting}
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </SheetContent>
         </Sheet>
